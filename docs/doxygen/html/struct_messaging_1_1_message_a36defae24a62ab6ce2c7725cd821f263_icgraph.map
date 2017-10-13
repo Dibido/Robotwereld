@@ -1,0 +1,10 @@
+<map id="Messaging::Message::getBody" name="Messaging::Message::getBody">
+<area shape="rect" id="node2" href="$class_messaging_1_1_session.html#aa6bb0133b721e77c31411cccc1eb6c40" title="Messaging::Session\l::handleHeaderWritten" alt="" coords="209,12,377,53"/>
+<area shape="rect" id="node4" href="$class_messaging_1_1_server_session.html#a294d16e8d6c8839fee2358443d78dc15" title="Messaging::ServerSession\l::handleMessageRead" alt="" coords="623,71,813,112"/>
+<area shape="rect" id="node3" href="$class_messaging_1_1_session.html#af6693149abfd302fd6285d99a0131f18" title="Messaging::Session\l::writeMessage" alt="" coords="425,12,575,53"/>
+<area shape="rect" id="node5" href="$class_messaging_1_1_client_session.html#abdafb1626e9eb590ae2ed984e095a490" title="Messaging::ClientSession\l::start" alt="" coords="625,5,811,47"/>
+<area shape="rect" id="node6" href="$class_messaging_1_1_client.html#a7804792b483e50df149e9e77191d5d16" title="Messaging::Client::\lhandleConnect" alt="" coords="861,5,1007,47"/>
+<area shape="rect" id="node7" href="$class_messaging_1_1_client.html#ad591a306de7942562e5f682d4ec3b454" title="Messaging::Client::\ldispatchMessage" alt="" coords="1055,5,1200,47"/>
+<area shape="rect" id="node8" href="$class_model_1_1_robot.html#a7aabb3039cde09a96e07d900a5e19972" title="Model::Robot::stopCommunicating" alt="" coords="1248,13,1493,39"/>
+<area shape="rect" id="node9" href="$class_model_1_1_robot.html#a38d95cd9941ac61090d33e1e1d9f67a0" title="Model::Robot::~Robot" alt="" coords="1541,13,1704,39"/>
+</map>

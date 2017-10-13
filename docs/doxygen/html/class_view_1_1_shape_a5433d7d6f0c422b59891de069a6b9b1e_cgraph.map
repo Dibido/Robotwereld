@@ -1,0 +1,8 @@
+<map id="View::Shape::asDebugString" name="View::Shape::asDebugString">
+<area shape="rect" id="node2" href="$class_view_1_1_shape.html#a282b801714c40623152ab8ec0c2dbdbd" title="View::Shape::asString" alt="" coords="275,52,437,79"/>
+<area shape="rect" id="node6" href="$struct_view_1_1_shape_data.html#aa5d1c7ff4389a5c4a43730f6879ce621" title="View::ShapeData::asDebug\lString" alt="" coords="257,103,455,145"/>
+<area shape="rect" id="node3" href="$class_view_1_1_view_object.html#a4bba06c19986a2180b581f4568e18c16" title="View::ViewObject::getObjectId" alt="" coords="503,5,721,32"/>
+<area shape="rect" id="node4" href="$class_base_1_1_object_id.html#a59f01d1dff5b946d246150c49297057a" title="Base::ObjectId::asString" alt="" coords="523,56,701,83"/>
+<area shape="rect" id="node5" href="$class_base_1_1_object_id.html#a71c9c007cdd0da1fefe7430186a95081" title="Base::ObjectId::isNull" alt="" coords="769,56,931,83"/>
+<area shape="rect" id="node7" href="$struct_view_1_1_shape_data.html#aa2df13ad9dd6d08181c7c1baecd1573e" title="View::ShapeData::asString" alt="" coords="515,111,709,137"/>
+</map>

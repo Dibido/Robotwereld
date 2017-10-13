@@ -1,0 +1,20 @@
+<map id="Base::ObjectId::isNull" name="Base::ObjectId::isNull">
+<area shape="rect" id="node2" href="$class_base_1_1_object_id.html#a38c839f0e639b91358965278931a0c79" title="Base::ObjectId::isValid" alt="" coords="220,5,387,32"/>
+<area shape="rect" id="node3" href="$class_base_1_1_object_id.html#a59f01d1dff5b946d246150c49297057a" title="Base::ObjectId::asString" alt="" coords="215,56,392,83"/>
+<area shape="rect" id="node4" href="$class_base_1_1_object_id.html#a183c0b72328e7fe274e4d0c3b3d6d99a" title="Base::ObjectId::asDebugString" alt="" coords="440,5,659,32"/>
+<area shape="rect" id="node5" href="$namespace_base.html#a7917d08dbad925ca11aa559946aba05b" title="Base::operator\&lt;\&lt;" alt="" coords="480,56,619,83"/>
+<area shape="rect" id="node6" href="$class_view_1_1_shape.html#a282b801714c40623152ab8ec0c2dbdbd" title="View::Shape::asString" alt="" coords="468,107,631,133"/>
+<area shape="rect" id="node7" href="$class_view_1_1_line_shape.html#a85bd542deb34138ca0cfff8f514e6af7" title="View::LineShape::asString" alt="" coords="714,48,903,75"/>
+<area shape="rect" id="node8" href="$class_view_1_1_rectangle_shape.html#ab6650f0ce587dc7802fd1d2b88b2a7df" title="View::RectangleShape\l::asString" alt="" coords="726,99,891,141"/>
+<area shape="rect" id="node12" href="$class_view_1_1_shape.html#a5433d7d6f0c422b59891de069a6b9b1e" title="View::Shape::asDebugString" alt="" coords="707,183,911,209"/>
+<area shape="rect" id="node9" href="$class_view_1_1_robot_shape.html#a658f1cc8c61b290905a0e8a15c7707d4" title="View::RobotShape::asString" alt="" coords="959,48,1157,75"/>
+<area shape="rect" id="node10" href="$class_view_1_1_way_point_shape.html#a39df094d6d3b3d918470ba841cabcd6c" title="View::WayPointShape\l::asString" alt="" coords="977,99,1139,141"/>
+<area shape="rect" id="node11" href="$class_view_1_1_goal_shape.html#aa6e576809d39c81cc6e746f66121450f" title="View::GoalShape::asString" alt="" coords="1211,95,1403,121"/>
+<area shape="rect" id="node13" href="$class_view_1_1_line_shape.html#afade47c97cabd82bed368e0aa00840c1" title="View::LineShape::asDebug\lString" alt="" coords="961,175,1155,217"/>
+<area shape="rect" id="node16" href="$class_view_1_1_rectangle_shape.html#ada57b4818aecf78e1efb998a90db7dae" title="View::RectangleShape\l::asDebugString" alt="" coords="975,262,1141,303"/>
+<area shape="rect" id="node14" href="$class_view_1_1_wall_shape.html#ab44203b08962a71a76dca4454757586f" title="View::WallShape::asString" alt="" coords="1211,145,1402,172"/>
+<area shape="rect" id="node15" href="$class_view_1_1_wall_shape.html#a4f8b8692094d2b2d3b9959c0ee8363f4" title="View::WallShape::asDebug\lString" alt="" coords="1209,197,1404,238"/>
+<area shape="rect" id="node17" href="$class_view_1_1_robot_shape.html#aa5dba989bcb446011c80892bef0043a9" title="View::RobotShape::asDebug\lString" alt="" coords="1205,262,1408,303"/>
+<area shape="rect" id="node18" href="$class_view_1_1_way_point_shape.html#a237e5d964adaf21780dde8c36c82d7b3" title="View::WayPointShape\l::asDebugString" alt="" coords="1225,327,1388,369"/>
+<area shape="rect" id="node19" href="$class_view_1_1_goal_shape.html#ada793daabb42bdfe675320ae447c005e" title="View::GoalShape::asDebug\lString" alt="" coords="1456,327,1652,369"/>
+</map>

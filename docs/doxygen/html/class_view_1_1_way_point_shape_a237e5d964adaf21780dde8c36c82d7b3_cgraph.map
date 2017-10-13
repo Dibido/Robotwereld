@@ -1,0 +1,13 @@
+<map id="View::WayPointShape::asDebugString" name="View::WayPointShape::asDebugString">
+<area shape="rect" id="node2" href="$class_view_1_1_rectangle_shape.html#ada57b4818aecf78e1efb998a90db7dae" title="View::RectangleShape\l::asDebugString" alt="" coords="216,133,381,174"/>
+<area shape="rect" id="node12" href="$class_view_1_1_way_point_shape.html#ac60ac5629873cb3b3b9346ac48576953" title="View::WayPointShape\l::getWayPoint" alt="" coords="217,198,380,239"/>
+<area shape="rect" id="node3" href="$class_view_1_1_shape.html#a5433d7d6f0c422b59891de069a6b9b1e" title="View::Shape::asDebugString" alt="" coords="429,81,633,108"/>
+<area shape="rect" id="node10" href="$class_utils_1_1_shape2_d_utils.html#a47efad1075c8fabb7af1146f17fadaa2" title="Utils::Shape2DUtils\l::asString" alt="" coords="457,133,605,174"/>
+<area shape="rect" id="node11" href="$class_view_1_1_view_object.html#a3da9d193b02ec4e17c045280db2d944b" title="View::ViewObject::getModel\lObject" alt="" coords="430,198,633,239"/>
+<area shape="rect" id="node4" href="$class_view_1_1_shape.html#a282b801714c40623152ab8ec0c2dbdbd" title="View::Shape::asString" alt="" coords="699,52,861,79"/>
+<area shape="rect" id="node8" href="$struct_view_1_1_shape_data.html#aa5d1c7ff4389a5c4a43730f6879ce621" title="View::ShapeData::asDebug\lString" alt="" coords="681,103,879,145"/>
+<area shape="rect" id="node5" href="$class_view_1_1_view_object.html#a4bba06c19986a2180b581f4568e18c16" title="View::ViewObject::getObjectId" alt="" coords="927,5,1145,32"/>
+<area shape="rect" id="node6" href="$class_base_1_1_object_id.html#a59f01d1dff5b946d246150c49297057a" title="Base::ObjectId::asString" alt="" coords="947,56,1125,83"/>
+<area shape="rect" id="node7" href="$class_base_1_1_object_id.html#a71c9c007cdd0da1fefe7430186a95081" title="Base::ObjectId::isNull" alt="" coords="1193,56,1355,83"/>
+<area shape="rect" id="node9" href="$struct_view_1_1_shape_data.html#aa2df13ad9dd6d08181c7c1baecd1573e" title="View::ShapeData::asString" alt="" coords="939,111,1133,137"/>
+</map>

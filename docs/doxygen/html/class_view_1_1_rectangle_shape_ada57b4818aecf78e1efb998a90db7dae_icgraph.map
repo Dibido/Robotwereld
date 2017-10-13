@@ -1,0 +1,5 @@
+<map id="View::RectangleShape::asDebugString" name="View::RectangleShape::asDebugString">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_shape.html#aa5dba989bcb446011c80892bef0043a9" title="View::RobotShape::asDebug\lString" alt="" coords="219,5,421,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_way_point_shape.html#a237e5d964adaf21780dde8c36c82d7b3" title="View::WayPointShape\l::asDebugString" alt="" coords="239,71,401,112"/>
+<area shape="rect" id="node4" href="$class_view_1_1_goal_shape.html#ada793daabb42bdfe675320ae447c005e" title="View::GoalShape::asDebug\lString" alt="" coords="469,71,665,112"/>
+</map>

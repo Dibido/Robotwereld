@@ -1,0 +1,5 @@
+<map id="View::RobotWorldCanvas::addShape" name="View::RobotWorldCanvas::addShape">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#abd7db9facf18e6cadd54c2f681df7c66" title="View::RobotWorldCanvas\l::handleAddRobot" alt="" coords="236,5,419,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a27d9c2435d11a4a25ba545b2dedb7942" title="View::RobotWorldCanvas\l::handleAddWayPoint" alt="" coords="236,71,419,112"/>
+<area shape="rect" id="node4" href="$class_view_1_1_robot_world_canvas.html#aec6ff89595e1a7acc7d52617e7382a9d" title="View::RobotWorldCanvas\l::handleAddGoal" alt="" coords="236,136,419,177"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="src/RectangleShape.hpp" name="src/RectangleShape.hpp">
+<area shape="rect" id="node2" href="$_config_8hpp.html" title="Config.hpp" alt="" coords="439,453,529,480"/>
+<area shape="rect" id="node5" href="$_widgets_8hpp.html" title="Widgets.hpp" alt="" coords="2701,155,2803,181"/>
+<area shape="rect" id="node34" href="$_size_8hpp.html" title="Size.hpp" alt="" coords="4595,229,4672,256"/>
+<area shape="rect" id="node37" href="$_shape_8hpp.html" title="Shape.hpp" alt="" coords="935,80,1025,107"/>
+<area shape="rect" id="node33" href="$_point_8hpp.html" title="Point.hpp" alt="" coords="4488,229,4571,256"/>
+<area shape="rect" id="node35" href="$_region_8hpp.html" title="Region.hpp" alt="" coords="1037,229,1131,256"/>
+<area shape="rect" id="node38" href="$_view_object_8hpp.html" title="ViewObject.hpp" alt="" coords="386,155,510,181"/>
+<area shape="rect" id="node40" href="$_object_id_8hpp.html" title="ObjectId.hpp" alt="" coords="183,304,287,331"/>
+<area shape="rect" id="node39" href="$_observer_8hpp.html" title="Observer.hpp" alt="" coords="643,379,751,405"/>
+<area shape="rect" id="node45" href="$_model_object_8hpp.html" title="ModelObject.hpp" alt="" coords="383,229,513,256"/>
+<area shape="rect" id="node47" href="$_notifier_8hpp.html" title="Notifier.hpp" alt="" coords="559,304,657,331"/>
+</map>

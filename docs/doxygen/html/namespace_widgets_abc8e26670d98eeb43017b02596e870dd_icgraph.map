@@ -1,0 +1,5 @@
+<map id="Widgets::GetTextFromUser" name="Widgets::GetTextFromUser">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#a57692f00a4e5fb281fc7baf1920f6430" title="View::RobotWorldCanvas\l::handleEditRobot" alt="" coords="248,5,431,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a28b10cb19c0c0810c329f8730dd26da3" title="View::RobotWorldCanvas\l::handleEditWayPoint" alt="" coords="248,71,431,112"/>
+<area shape="rect" id="node4" href="$class_view_1_1_robot_world_canvas.html#a02faf3e677c578a817e6c3e071c40fbd" title="View::RobotWorldCanvas\l::handleEditGoal" alt="" coords="248,136,431,177"/>
+</map>

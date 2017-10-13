@@ -1,0 +1,12 @@
+<map id="Model::Robot::handleRequest" name="Model::Robot::handleRequest">
+<area shape="rect" id="node2" href="$struct_messaging_1_1_message.html#ac08bd08b9d263ccf8fc8d0958fd1e1ce" title="Messaging::Message\l::getMessageType" alt="" coords="273,5,429,47"/>
+<area shape="rect" id="node3" href="$class_application_1_1_logger.html#a0fa1454fb35f3e6980ba46801437f37e" title="Application::Logger::log" alt="" coords="264,71,439,98"/>
+<area shape="rect" id="node7" href="$struct_messaging_1_1_message.html#a9a63d50cbf443564d6092d532495f95f" title="Messaging::Message\l::setMessageType" alt="" coords="273,123,429,164"/>
+<area shape="rect" id="node8" href="$struct_messaging_1_1_message.html#abedc9083e15715ad417043e6c483818e" title="Messaging::Message\l::setBody" alt="" coords="273,188,429,229"/>
+<area shape="rect" id="node9" href="$struct_messaging_1_1_message.html#a20bb9df7d79639dc5b0334eaa0e354ab" title="Messaging::Message\l::asString" alt="" coords="273,253,429,295"/>
+<area shape="rect" id="node4" href="$namespace_application.html#a8385de8a3bbb35a3b7cfee9b16835ee9" title="Application::TheApp" alt="" coords="524,13,676,39"/>
+<area shape="rect" id="node5" href="$class_application_1_1_main_frame_window.html#a2716b3e370a4eef20a7fbeacbcad36a5" title="Application::MainFrameWindow\l::getTraceFunction" alt="" coords="487,64,713,105"/>
+<area shape="rect" id="node6" href="$class_base_1_1_debug_trace_function.html#a54f5a1f127e7624e50bb1a43146f8998" title="Base::DebugTraceFunction\l::trace" alt="" coords="504,129,696,171"/>
+<area shape="rect" id="node10" href="$struct_messaging_1_1_message.html#ad66c64a0450a41e213b368789d2a00c8" title="Messaging::Message\l::getHeader" alt="" coords="522,224,678,265"/>
+<area shape="rect" id="node11" href="$struct_messaging_1_1_message_1_1_message_header.html#a095276c544d4cd9b04952d5829732f6e" title="Messaging::Message\l::MessageHeader::asString" alt="" coords="503,289,697,331"/>
+</map>

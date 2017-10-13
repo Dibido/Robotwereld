@@ -1,0 +1,6 @@
+<map id="Application::MainApplication::getArg" name="Application::MainApplication::getArg">
+<area shape="rect" id="node2" href="$class_application_1_1_main_application.html#ac9714c4b1debf0d532e2b30224833b53" title="Application::MainApplication\l::OnInit" alt="" coords="280,5,487,47"/>
+<area shape="rect" id="node3" href="$class_model_1_1_robot.html#a0178459eef83c12c50056717b3c5b8a8" title="Model::Robot::startCommunicating" alt="" coords="260,71,507,98"/>
+<area shape="rect" id="node4" href="$class_model_1_1_robot.html#a7aabb3039cde09a96e07d900a5e19972" title="Model::Robot::stopCommunicating" alt="" coords="261,122,506,149"/>
+<area shape="rect" id="node5" href="$class_model_1_1_robot.html#a38d95cd9941ac61090d33e1e1d9f67a0" title="Model::Robot::~Robot" alt="" coords="555,122,717,149"/>
+</map>

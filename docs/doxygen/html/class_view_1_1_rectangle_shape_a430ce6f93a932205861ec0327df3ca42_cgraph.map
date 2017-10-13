@@ -1,0 +1,6 @@
+<map id="View::RectangleShape::draw" name="View::RectangleShape::draw">
+<area shape="rect" id="node2" href="$namespace_widgets.html#af92dace3ab6f9cbc0d9d288b8b9f7786" title="Widgets::WXSTRING" alt="" coords="229,5,384,32"/>
+<area shape="rect" id="node3" href="$class_view_1_1_shape.html#adfee2a06f80fddf55b5860f9e5240224" title="View::Shape::isSelected" alt="" coords="219,56,395,83"/>
+<area shape="rect" id="node4" href="$class_view_1_1_rectangle_shape.html#a91c3819821d46d16d1ad9cdb7e9ee411" title="View::RectangleShape\l::getSelectionColour" alt="" coords="224,107,389,149"/>
+<area shape="rect" id="node5" href="$class_view_1_1_rectangle_shape.html#ae46a6bd4a771cb9784a51b0dc65bc52e" title="View::RectangleShape\l::getNormalColour" alt="" coords="224,173,389,214"/>
+</map>

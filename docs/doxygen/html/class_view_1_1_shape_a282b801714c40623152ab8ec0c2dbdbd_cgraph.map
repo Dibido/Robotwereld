@@ -1,0 +1,5 @@
+<map id="View::Shape::asString" name="View::Shape::asString">
+<area shape="rect" id="node2" href="$class_view_1_1_view_object.html#a4bba06c19986a2180b581f4568e18c16" title="View::ViewObject::getObjectId" alt="" coords="216,5,435,32"/>
+<area shape="rect" id="node3" href="$class_base_1_1_object_id.html#a59f01d1dff5b946d246150c49297057a" title="Base::ObjectId::asString" alt="" coords="237,56,414,83"/>
+<area shape="rect" id="node4" href="$class_base_1_1_object_id.html#a71c9c007cdd0da1fefe7430186a95081" title="Base::ObjectId::isNull" alt="" coords="483,56,644,83"/>
+</map>

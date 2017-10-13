@@ -1,0 +1,9 @@
+<map id="View::RobotShape::asString" name="View::RobotShape::asString">
+<area shape="rect" id="node2" href="$class_view_1_1_rectangle_shape.html#ab6650f0ce587dc7802fd1d2b88b2a7df" title="View::RectangleShape\l::asString" alt="" coords="252,82,417,123"/>
+<area shape="rect" id="node3" href="$class_view_1_1_shape.html#a282b801714c40623152ab8ec0c2dbdbd" title="View::Shape::asString" alt="" coords="485,31,648,57"/>
+<area shape="rect" id="node7" href="$class_utils_1_1_shape2_d_utils.html#a47efad1075c8fabb7af1146f17fadaa2" title="Utils::Shape2DUtils\l::asString" alt="" coords="493,82,641,123"/>
+<area shape="rect" id="node8" href="$class_view_1_1_view_object.html#a3da9d193b02ec4e17c045280db2d944b" title="View::ViewObject::getModel\lObject" alt="" coords="465,147,668,189"/>
+<area shape="rect" id="node4" href="$class_view_1_1_view_object.html#a4bba06c19986a2180b581f4568e18c16" title="View::ViewObject::getObjectId" alt="" coords="716,5,935,32"/>
+<area shape="rect" id="node5" href="$class_base_1_1_object_id.html#a59f01d1dff5b946d246150c49297057a" title="Base::ObjectId::asString" alt="" coords="737,56,914,83"/>
+<area shape="rect" id="node6" href="$class_base_1_1_object_id.html#a71c9c007cdd0da1fefe7430186a95081" title="Base::ObjectId::isNull" alt="" coords="983,56,1144,83"/>
+</map>

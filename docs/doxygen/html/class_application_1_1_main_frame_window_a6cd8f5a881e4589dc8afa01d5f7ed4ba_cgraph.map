@@ -1,0 +1,11 @@
+<map id="Application::MainFrameWindow::MainFrameWindow" name="Application::MainFrameWindow::MainFrameWindow">
+<area shape="rect" id="node2" href="$class_application_1_1_main_frame_window.html#afbe4226dcd70f22c2ae32062881ceca6" title="Application::MainFrameWindow\l::initialise" alt="" coords="280,39,507,80"/>
+<area shape="rect" id="node3" href="$class_application_1_1_main_frame_window.html#abdb6890f8b5edd930f93f2fe51a5e181" title="Application::MainFrameWindow\l::initialiseMenuBar" alt="" coords="829,5,1056,47"/>
+<area shape="rect" id="node5" href="$class_application_1_1_main_frame_window.html#aa9064ca4429720b231234fba743c4b0f" title="Application::MainFrameWindow\l::initialiseClientPanel" alt="" coords="555,68,781,109"/>
+<area shape="rect" id="node4" href="$namespace_widgets.html#af92dace3ab6f9cbc0d9d288b8b9f7786" title="Widgets::WXSTRING" alt="" coords="1884,42,2039,69"/>
+<area shape="rect" id="node6" href="$class_application_1_1_main_frame_window.html#a88ea2a7e70bcd1a650c3834883d3deef" title="Application::MainFrameWindow\l::initialiseSplitterWindow" alt="" coords="829,71,1056,112"/>
+<area shape="rect" id="node7" href="$class_application_1_1_main_frame_window.html#ac0a4ced572ac913cdc441d1a35e97842" title="Application::MainFrameWindow\l::initialiseLhsPanel" alt="" coords="1104,64,1331,105"/>
+<area shape="rect" id="node8" href="$class_application_1_1_main_frame_window.html#a9d9bf15eb75cbce36bca4e22ba144161" title="Application::MainFrameWindow\l::initialiseRhsPanel" alt="" coords="1104,129,1331,171"/>
+<area shape="rect" id="node9" href="$class_application_1_1_main_frame_window.html#acc4b68465595b19ab6d23762b7ce1907" title="Application::MainFrameWindow\l::initialiseButtonPanel" alt="" coords="1379,96,1605,137"/>
+<area shape="rect" id="node10" href="$namespace_application.html#a238e70f3615d9645caabec1494c99c4a" title="Application::makeButton" alt="" coords="1653,67,1836,94"/>
+</map>

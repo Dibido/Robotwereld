@@ -1,0 +1,8 @@
+<map id="Widgets::STDSTRING" name="Widgets::STDSTRING">
+<area shape="rect" id="node2" href="$class_application_1_1_log_text_ctrl.html#af03d3d9049d7a9c13de10d249751fc5e" title="Application::LogTextCtrl\l::OnCommandEvent" alt="" coords="221,25,397,67"/>
+<area shape="rect" id="node4" href="$namespace_widgets.html#abc8e26670d98eeb43017b02596e870dd" title="Widgets::GetTextFromUser" alt="" coords="212,111,407,138"/>
+<area shape="rect" id="node3" href="$class_application_1_1_log_text_ctrl.html#aded0f03a723158ab1a3d2de74a3c8262" title="Application::LogTextCtrl\l::LogTextCtrl" alt="" coords="458,5,634,47"/>
+<area shape="rect" id="node5" href="$class_view_1_1_robot_world_canvas.html#a57692f00a4e5fb281fc7baf1920f6430" title="View::RobotWorldCanvas\l::handleEditRobot" alt="" coords="455,71,637,112"/>
+<area shape="rect" id="node6" href="$class_view_1_1_robot_world_canvas.html#a28b10cb19c0c0810c329f8730dd26da3" title="View::RobotWorldCanvas\l::handleEditWayPoint" alt="" coords="455,136,637,177"/>
+<area shape="rect" id="node7" href="$class_view_1_1_robot_world_canvas.html#a02faf3e677c578a817e6c3e071c40fbd" title="View::RobotWorldCanvas\l::handleEditGoal" alt="" coords="455,201,637,243"/>
+</map>

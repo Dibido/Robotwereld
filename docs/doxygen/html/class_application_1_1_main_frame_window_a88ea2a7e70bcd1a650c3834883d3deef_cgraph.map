@@ -1,0 +1,7 @@
+<map id="Application::MainFrameWindow::initialiseSplitterWindow" name="Application::MainFrameWindow::initialiseSplitterWindow">
+<area shape="rect" id="node2" href="$class_application_1_1_main_frame_window.html#ac0a4ced572ac913cdc441d1a35e97842" title="Application::MainFrameWindow\l::initialiseLhsPanel" alt="" coords="280,5,507,47"/>
+<area shape="rect" id="node3" href="$class_application_1_1_main_frame_window.html#a9d9bf15eb75cbce36bca4e22ba144161" title="Application::MainFrameWindow\l::initialiseRhsPanel" alt="" coords="280,71,507,112"/>
+<area shape="rect" id="node4" href="$class_application_1_1_main_frame_window.html#acc4b68465595b19ab6d23762b7ce1907" title="Application::MainFrameWindow\l::initialiseButtonPanel" alt="" coords="555,71,781,112"/>
+<area shape="rect" id="node5" href="$namespace_application.html#a238e70f3615d9645caabec1494c99c4a" title="Application::makeButton" alt="" coords="829,78,1012,105"/>
+<area shape="rect" id="node6" href="$namespace_widgets.html#af92dace3ab6f9cbc0d9d288b8b9f7786" title="Widgets::WXSTRING" alt="" coords="1060,78,1215,105"/>
+</map>

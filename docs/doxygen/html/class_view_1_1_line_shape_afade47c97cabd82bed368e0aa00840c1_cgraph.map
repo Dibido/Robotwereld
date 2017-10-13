@@ -1,0 +1,12 @@
+<map id="View::LineShape::asDebugString" name="View::LineShape::asDebugString">
+<area shape="rect" id="node2" href="$class_view_1_1_shape.html#a5433d7d6f0c422b59891de069a6b9b1e" title="View::Shape::asDebugString" alt="" coords="247,81,451,108"/>
+<area shape="rect" id="node9" href="$class_utils_1_1_shape2_d_utils.html#a47efad1075c8fabb7af1146f17fadaa2" title="Utils::Shape2DUtils\l::asString" alt="" coords="275,133,423,174"/>
+<area shape="rect" id="node10" href="$class_view_1_1_line_shape.html#a01aabcefbac117c9cb0d3dd55c25f982" title="View::LineShape::getBegin" alt="" coords="251,199,446,225"/>
+<area shape="rect" id="node11" href="$class_view_1_1_line_shape.html#a05c46acd617e5bd9d2e32e02f8bda30c" title="View::LineShape::getEnd" alt="" coords="258,249,439,276"/>
+<area shape="rect" id="node3" href="$class_view_1_1_shape.html#a282b801714c40623152ab8ec0c2dbdbd" title="View::Shape::asString" alt="" coords="516,52,679,79"/>
+<area shape="rect" id="node7" href="$struct_view_1_1_shape_data.html#aa5d1c7ff4389a5c4a43730f6879ce621" title="View::ShapeData::asDebug\lString" alt="" coords="499,103,696,145"/>
+<area shape="rect" id="node4" href="$class_view_1_1_view_object.html#a4bba06c19986a2180b581f4568e18c16" title="View::ViewObject::getObjectId" alt="" coords="744,5,963,32"/>
+<area shape="rect" id="node5" href="$class_base_1_1_object_id.html#a59f01d1dff5b946d246150c49297057a" title="Base::ObjectId::asString" alt="" coords="765,56,942,83"/>
+<area shape="rect" id="node6" href="$class_base_1_1_object_id.html#a71c9c007cdd0da1fefe7430186a95081" title="Base::ObjectId::isNull" alt="" coords="1011,56,1172,83"/>
+<area shape="rect" id="node8" href="$struct_view_1_1_shape_data.html#aa2df13ad9dd6d08181c7c1baecd1573e" title="View::ShapeData::asString" alt="" coords="757,111,950,137"/>
+</map>

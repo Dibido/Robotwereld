@@ -1,0 +1,8 @@
+<map id="View::WayPointShape::getWayPoint" name="View::WayPointShape::getWayPoint">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#aee572b2a63b6a8b1577ee7b69bf90b87" title="View::RobotWorldCanvas\l::handleEndDrag" alt="" coords="216,5,399,47"/>
+<area shape="rect" id="node4" href="$class_view_1_1_way_point_shape.html#ac8e4cd575b74030ac9931f64bba16e1f" title="View::WayPointShape\l::draw" alt="" coords="226,71,389,112"/>
+<area shape="rect" id="node5" href="$class_view_1_1_way_point_shape.html#a2fa9c9ec63a43d61ed5356060cab8cc7" title="View::WayPointShape\l::setCentre" alt="" coords="226,136,389,177"/>
+<area shape="rect" id="node6" href="$class_view_1_1_way_point_shape.html#a237e5d964adaf21780dde8c36c82d7b3" title="View::WayPointShape\l::asDebugString" alt="" coords="226,201,389,243"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a652bd5372da5fd21ecc2379faf7d5c62" title="View::RobotWorldCanvas\l::handleLeftUp" alt="" coords="453,5,636,47"/>
+<area shape="rect" id="node7" href="$class_view_1_1_goal_shape.html#ada793daabb42bdfe675320ae447c005e" title="View::GoalShape::asDebug\lString" alt="" coords="447,201,643,243"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="View::WallShape::updateEndPoint" name="View::WallShape::updateEndPoint">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#aee572b2a63b6a8b1577ee7b69bf90b87" title="View::RobotWorldCanvas\l::handleEndDrag" alt="" coords="260,5,443,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a652bd5372da5fd21ecc2379faf7d5c62" title="View::RobotWorldCanvas\l::handleLeftUp" alt="" coords="491,5,673,47"/>
+</map>

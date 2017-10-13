@@ -1,0 +1,10 @@
+<map id="View::RobotShape::getRobot" name="View::RobotShape::getRobot">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_shape.html#ab07702949d9d374331a17db4759f0762" title="View::RobotShape::handle\lActivated" alt="" coords="267,5,457,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_shape.html#aa8e3a33d23b11a1f9c4580ff46d3d9f7" title="View::RobotShape::handle\lNotification" alt="" coords="515,140,705,181"/>
+<area shape="rect" id="node4" href="$class_view_1_1_robot_shape.html#a9f12f9abfa2d4ebfa47b06e02c71d23c" title="View::RobotShape::draw" alt="" coords="273,122,451,149"/>
+<area shape="rect" id="node5" href="$class_view_1_1_robot_shape.html#af8a8a89104747b3b37e863d59a8ccc41" title="View::RobotShape::occupies" alt="" coords="261,173,463,199"/>
+<area shape="rect" id="node6" href="$class_view_1_1_robot_shape.html#a4b12a96d27b17153069e8864258f52df" title="View::RobotShape::setCentre" alt="" coords="257,223,467,250"/>
+<area shape="rect" id="node7" href="$class_view_1_1_robot_shape.html#aa5dba989bcb446011c80892bef0043a9" title="View::RobotShape::asDebug\lString" alt="" coords="261,275,463,316"/>
+<area shape="rect" id="node8" href="$class_view_1_1_robot_world_canvas.html#aee572b2a63b6a8b1577ee7b69bf90b87" title="View::RobotWorldCanvas\l::handleEndDrag" alt="" coords="271,340,453,381"/>
+<area shape="rect" id="node9" href="$class_view_1_1_robot_world_canvas.html#a652bd5372da5fd21ecc2379faf7d5c62" title="View::RobotWorldCanvas\l::handleLeftUp" alt="" coords="519,340,701,381"/>
+</map>

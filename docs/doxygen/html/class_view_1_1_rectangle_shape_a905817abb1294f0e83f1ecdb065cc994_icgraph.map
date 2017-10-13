@@ -1,0 +1,5 @@
+<map id="View::RectangleShape::setCentre" name="View::RectangleShape::setCentre">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_shape.html#a4b12a96d27b17153069e8864258f52df" title="View::RobotShape::setCentre" alt="" coords="219,13,428,39"/>
+<area shape="rect" id="node4" href="$class_view_1_1_way_point_shape.html#a2fa9c9ec63a43d61ed5356060cab8cc7" title="View::WayPointShape\l::setCentre" alt="" coords="242,64,405,105"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_shape.html#aa8e3a33d23b11a1f9c4580ff46d3d9f7" title="View::RobotShape::handle\lNotification" alt="" coords="476,5,667,47"/>
+</map>

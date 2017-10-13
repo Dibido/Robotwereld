@@ -1,0 +1,35 @@
+<map id="src/Widgets.hpp" name="src/Widgets.hpp">
+<area shape="rect" id="node2" href="$_button_8hpp.html" title="src/Button.hpp" alt="" coords="1809,244,1925,271"/>
+<area shape="rect" id="node4" href="$_shape_8hpp.html" title="src/Shape.hpp" alt="" coords="599,87,712,114"/>
+<area shape="rect" id="node8" href="$_rectangle_shape_8hpp.html" title="src/RectangleShape.hpp" alt="" coords="473,169,651,196"/>
+<area shape="rect" id="node16" href="$_robot_shape_8hpp.html" title="src/RobotShape.hpp" alt="" coords="801,244,952,271"/>
+<area shape="rect" id="node18" href="$_robot_world_canvas_8hpp.html" title="src/RobotWorldCanvas.hpp" alt="" coords="983,244,1178,271"/>
+<area shape="rect" id="node19" href="$_main_application_8hpp.html" title="src/MainApplication.hpp" alt="" coords="996,87,1173,114"/>
+<area shape="rect" id="node24" href="$_main_frame_window_8hpp.html" title="src/MainFrameWindow.hpp" alt="" coords="1198,87,1393,114"/>
+<area shape="rect" id="node25" href="$_log_text_ctrl_8hpp.html" title="src/LogTextCtrl.hpp" alt="" coords="2201,87,2347,114"/>
+<area shape="rect" id="node28" href="$_notification_event_8hpp.html" title="src/NotificationEvent.hpp" alt="" coords="1417,87,1603,114"/>
+<area shape="rect" id="node29" href="$_notification_handler_8hpp.html" title="src/NotificationHandler.hpp" alt="" coords="1637,169,1836,196"/>
+<area shape="rect" id="node31" href="$_notification_function_type_traits_8hpp.html" title="src/NotificationFunction\lTypeTraits.hpp" alt="" coords="1627,80,1801,121"/>
+<area shape="rect" id="node32" href="$_widget_debug_trace_function_8hpp.html" title="src/WidgetDebugTraceFunction.hpp" alt="" coords="1927,87,2176,114"/>
+<area shape="rect" id="node33" href="$_shape2_d_utils_8cpp.html" title="src/Shape2DUtils.cpp" alt="" coords="2371,87,2531,114"/>
+<area shape="rect" id="node34" href="$_widgets_8cpp.html" title="src/Widgets.cpp" alt="" coords="2555,87,2681,114"/>
+<area shape="rect" id="node3" href="$_main_frame_window_8cpp.html" title="src/MainFrameWindow.cpp" alt="" coords="1515,319,1710,345"/>
+<area shape="rect" id="node5" href="$_goal_shape_8hpp.html" title="src/GoalShape.hpp" alt="" coords="5,319,148,345"/>
+<area shape="rect" id="node11" href="$_line_shape_8hpp.html" title="src/LineShape.hpp" alt="" coords="637,244,777,271"/>
+<area shape="rect" id="node6" href="$_goal_shape_8cpp.html" title="src/GoalShape.cpp" alt="" coords="5,393,148,420"/>
+<area shape="rect" id="node7" href="$_robot_world_canvas_8cpp.html" title="src/RobotWorldCanvas.cpp" alt="" coords="650,393,845,420"/>
+<area shape="rect" id="node9" href="$_way_point_shape_8hpp.html" title="src/WayPointShape.hpp" alt="" coords="136,244,311,271"/>
+<area shape="rect" id="node13" href="$_wall_shape_8hpp.html" title="src/WallShape.hpp" alt="" coords="421,319,562,345"/>
+<area shape="rect" id="node15" href="$_rectangle_shape_8cpp.html" title="src/RectangleShape.cpp" alt="" coords="335,244,511,271"/>
+<area shape="rect" id="node10" href="$_way_point_shape_8cpp.html" title="src/WayPointShape.cpp" alt="" coords="173,319,346,345"/>
+<area shape="rect" id="node12" href="$_line_shape_8cpp.html" title="src/LineShape.cpp" alt="" coords="637,319,775,345"/>
+<area shape="rect" id="node14" href="$_wall_shape_8cpp.html" title="src/WallShape.cpp" alt="" coords="421,393,561,420"/>
+<area shape="rect" id="node17" href="$_robot_shape_8cpp.html" title="src/RobotShape.cpp" alt="" coords="901,319,1050,345"/>
+<area shape="rect" id="node20" href="$_logger_8cpp.html" title="src/Logger.cpp" alt="" coords="1198,169,1313,196"/>
+<area shape="rect" id="node21" href="$_main_8cpp.html" title="src/Main.cpp" alt="" coords="1020,169,1123,196"/>
+<area shape="rect" id="node22" href="$_main_application_8cpp.html" title="src/MainApplication.cpp" alt="" coords="1337,169,1513,196"/>
+<area shape="rect" id="node23" href="$_robot_8cpp.html" title="src/Robot.cpp" alt="" coords="886,169,995,196"/>
+<area shape="rect" id="node26" href="$_log_text_ctrl_8cpp.html" title="src/LogTextCtrl.cpp" alt="" coords="2324,169,2469,196"/>
+<area shape="rect" id="node27" href="$_widget_debug_trace_function_8cpp.html" title="src/WidgetDebugTraceFunction.cpp" alt="" coords="2001,169,2249,196"/>
+<area shape="rect" id="node30" href="$_notification_handler_8cpp.html" title="src/NotificationHandler.cpp" alt="" coords="1587,244,1785,271"/>
+</map>

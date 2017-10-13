@@ -1,0 +1,14 @@
+<map id="Messaging::ServerSession::handleMessageRead" name="Messaging::ServerSession::handleMessageRead">
+<area shape="rect" id="node2" href="$class_messaging_1_1_session.html#af6693149abfd302fd6285d99a0131f18" title="Messaging::Session\l::writeMessage" alt="" coords="295,142,444,183"/>
+<area shape="rect" id="node8" href="$struct_messaging_1_1_message.html#a36defae24a62ab6ce2c7725cd821f263" title="Messaging::Message\l::getBody" alt="" coords="820,330,976,371"/>
+<area shape="rect" id="node12" href="$class_messaging_1_1_communication_service.html#a84eb6ffc757597611e01dfacb46c3702" title="Messaging::Communication\lService::getCommunicationService" alt="" coords="244,353,495,394"/>
+<area shape="rect" id="node13" href="$class_messaging_1_1_communication_service.html#a603bfa697fbac1d8ea95115fbc78de24" title="Messaging::Communication\lService::getIOService" alt="" coords="268,418,471,459"/>
+<area shape="rect" id="node3" href="$class_messaging_1_1_session.html#aedafb8b5c664cd9d2d86b90b863bde77" title="Messaging::Session\l::getSocket" alt="" coords="823,134,973,175"/>
+<area shape="rect" id="node4" href="$struct_messaging_1_1_message.html#ad66c64a0450a41e213b368789d2a00c8" title="Messaging::Message\l::getHeader" alt="" coords="570,35,726,77"/>
+<area shape="rect" id="node5" href="$struct_messaging_1_1_message_1_1_message_header.html#ac99d4db665d8003f248dbd5d43621777" title="Messaging::Message\l::MessageHeader::toString" alt="" coords="801,39,995,81"/>
+<area shape="rect" id="node6" href="$struct_messaging_1_1_message_1_1_message_header.html#ad158eaa804e721ea6d0b4496ab85fea0" title="Messaging::Message\l::MessageHeader::getHeader\lLength" alt="" coords="543,101,753,157"/>
+<area shape="rect" id="node7" href="$class_messaging_1_1_session.html#aa6bb0133b721e77c31411cccc1eb6c40" title="Messaging::Session\l::handleHeaderWritten" alt="" coords="564,233,732,274"/>
+<area shape="rect" id="node9" href="$struct_messaging_1_1_message.html#a25c4adba5ba37589bc90ba6fcd012d60" title="Messaging::Message\l::length" alt="" coords="820,199,976,241"/>
+<area shape="rect" id="node10" href="$class_messaging_1_1_session.html#a42e7eb7f1e5d41861417d03dcb5419e7" title="Messaging::Session\l::handleBodyWritten" alt="" coords="821,265,975,306"/>
+<area shape="rect" id="node11" href="$class_messaging_1_1_session.html#afcf204df8f7e67e470d454d9de561515" title="Messaging::Session\l::handleMessageWritten" alt="" coords="1043,265,1221,306"/>
+</map>

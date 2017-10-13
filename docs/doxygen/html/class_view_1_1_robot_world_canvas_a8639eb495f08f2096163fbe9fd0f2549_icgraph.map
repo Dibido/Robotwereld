@@ -1,0 +1,5 @@
+<map id="View::RobotWorldCanvas::getShapeAt" name="View::RobotWorldCanvas::getShapeAt">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#a652bd5372da5fd21ecc2379faf7d5c62" title="View::RobotWorldCanvas\l::handleLeftUp" alt="" coords="236,5,419,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a6287e395342c737724bebbeb56de826d" title="View::RobotWorldCanvas\l::handleLeftDClick" alt="" coords="236,71,419,112"/>
+<area shape="rect" id="node4" href="$class_view_1_1_robot_world_canvas.html#a18873d7781c08653b14c9d3a9a0a8346" title="View::RobotWorldCanvas\l::handleRightUp" alt="" coords="236,136,419,177"/>
+</map>

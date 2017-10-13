@@ -1,0 +1,5 @@
+<map id="View::RobotWorldCanvas::removeGenericShape" name="View::RobotWorldCanvas::removeGenericShape">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#ad5e0ad23abc89fc5279d12049ff0fdbc" title="View::RobotWorldCanvas\l::isShapeSelected" alt="" coords="236,5,419,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a4b332b94b059245590fd43da8f021bcb" title="View::RobotWorldCanvas\l::getSelectedShape" alt="" coords="236,71,419,112"/>
+<area shape="rect" id="node4" href="$class_view_1_1_robot_world_canvas.html#a51477f3840089817d00ed6f2dee7c69e" title="View::RobotWorldCanvas\l::setSelectedShape" alt="" coords="236,136,419,177"/>
+</map>

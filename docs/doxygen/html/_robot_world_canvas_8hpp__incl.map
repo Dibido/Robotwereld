@@ -1,0 +1,16 @@
+<map id="src/RobotWorldCanvas.hpp" name="src/RobotWorldCanvas.hpp">
+<area shape="rect" id="node2" href="$_config_8hpp.html" title="Config.hpp" alt="" coords="3836,393,3927,420"/>
+<area shape="rect" id="node4" href="$_widgets_8hpp.html" title="Widgets.hpp" alt="" coords="2139,244,2242,271"/>
+<area shape="rect" id="node34" href="$_size_8hpp.html" title="Size.hpp" alt="" coords="5,319,83,345"/>
+<area shape="rect" id="node37" href="$_view_object_8hpp.html" title="ViewObject.hpp" alt="" coords="3938,162,4062,189"/>
+<area shape="rect" id="node46" href="$_notification_handler_8hpp.html" title="NotificationHandler.hpp" alt="" coords="3467,80,3642,107"/>
+<area shape="rect" id="node49" href="$_robot_world_8hpp.html" title="RobotWorld.hpp" alt="" coords="4105,162,4229,189"/>
+<area shape="rect" id="node50" href="$_shape_8hpp.html" title="Shape.hpp" alt="" coords="3753,80,3844,107"/>
+<area shape="rect" id="node33" href="$_point_8hpp.html" title="Point.hpp" alt="" coords="3711,319,3793,345"/>
+<area shape="rect" id="node35" href="$_region_8hpp.html" title="Region.hpp" alt="" coords="3254,319,3349,345"/>
+<area shape="rect" id="node38" href="$_observer_8hpp.html" title="Observer.hpp" alt="" coords="4021,244,4129,271"/>
+<area shape="rect" id="node39" href="$_object_id_8hpp.html" title="ObjectId.hpp" alt="" coords="4521,319,4625,345"/>
+<area shape="rect" id="node43" href="$_model_object_8hpp.html" title="ModelObject.hpp" alt="" coords="4273,244,4404,271"/>
+<area shape="rect" id="node47" href="$_notification_event_8hpp.html" title="NotificationEvent.hpp" alt="" coords="3473,162,3636,189"/>
+<area shape="rect" id="node48" href="$_notification_function_type_traits_8hpp.html" title="NotificationFunctionType\lTraits.hpp" alt="" coords="3268,155,3449,196"/>
+</map>

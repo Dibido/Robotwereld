@@ -1,0 +1,4 @@
+<map id="View::WallShape::occupies" name="View::WallShape::occupies">
+<area shape="rect" id="node2" href="$class_view_1_1_wall_shape.html#ac53998b44692cb6d51e57db6d32b9fa2" title="View::WallShape::hasEndPointAt" alt="" coords="248,13,479,39"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#a6f01a640b1d11b8a5c399ec1beb5d9dd" title="View::RobotWorldCanvas\l::handleLeftDown" alt="" coords="527,5,709,47"/>
+</map>

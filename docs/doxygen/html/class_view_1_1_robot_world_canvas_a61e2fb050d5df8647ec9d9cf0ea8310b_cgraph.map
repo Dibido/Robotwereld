@@ -1,0 +1,10 @@
+<map id="View::RobotWorldCanvas::handleDeleteWall" name="View::RobotWorldCanvas::handleDeleteWall">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_world_canvas.html#a4b332b94b059245590fd43da8f021bcb" title="View::RobotWorldCanvas\l::getSelectedShape" alt="" coords="717,5,900,47"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_world_canvas.html#ac40c2e62c75618d63e09a0d4f0ca4bb4" title="View::RobotWorldCanvas\l::removeShape" alt="" coords="236,99,419,140"/>
+<area shape="rect" id="node4" href="$class_model_1_1_robot_world.html#a3129fe115ffa78851d1d81e62a87bfa0" title="Model::RobotWorld::\lgetRobotWorld" alt="" coords="483,132,633,173"/>
+<area shape="rect" id="node5" href="$class_model_1_1_robot_world.html#aa6d7a030f609d6b1187b1c5e93469695" title="Model::RobotWorld::\ldeleteRobot" alt="" coords="483,197,633,239"/>
+<area shape="rect" id="node7" href="$class_view_1_1_robot_world_canvas.html#af3ba30c00eaedf7bbb67b731f12d1af7" title="View::RobotWorldCanvas\l::removeGenericShape" alt="" coords="467,67,649,108"/>
+<area shape="rect" id="node6" href="$class_base_1_1_notifier.html#a9a3df81524d8db68dd64f9a26575c6b4" title="Base::Notifier::notifyObservers" alt="" coords="697,205,920,231"/>
+<area shape="rect" id="node8" href="$class_view_1_1_robot_world_canvas.html#ad5e0ad23abc89fc5279d12049ff0fdbc" title="View::RobotWorldCanvas\l::isShapeSelected" alt="" coords="717,71,900,112"/>
+<area shape="rect" id="node9" href="$class_view_1_1_robot_world_canvas.html#a51477f3840089817d00ed6f2dee7c69e" title="View::RobotWorldCanvas\l::setSelectedShape" alt="" coords="717,136,900,177"/>
+</map>

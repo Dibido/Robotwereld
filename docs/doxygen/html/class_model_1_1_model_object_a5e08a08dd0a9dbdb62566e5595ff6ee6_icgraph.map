@@ -1,0 +1,5 @@
+<map id="Model::ModelObject::asString" name="Model::ModelObject::asString">
+<area shape="rect" id="node2" href="$class_model_1_1_robot_world.html#aba56c83813ed568e7d8ba3a2c36208fc" title="Model::RobotWorld::\lasString" alt="" coords="208,5,359,47"/>
+<area shape="rect" id="node4" href="$class_model_1_1_wall.html#a3c39cce57e64ca6cf86272da4b822419" title="Model::Wall::asString" alt="" coords="204,71,363,98"/>
+<area shape="rect" id="node3" href="$class_model_1_1_robot_world.html#aa95c3c9a583e2ac4da688d5b984fb8a1" title="Model::RobotWorld::\lasDebugString" alt="" coords="411,5,561,47"/>
+</map>

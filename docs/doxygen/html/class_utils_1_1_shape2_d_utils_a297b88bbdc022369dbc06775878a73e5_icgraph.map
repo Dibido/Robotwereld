@@ -1,0 +1,4 @@
+<map id="Utils::Shape2DUtils::isInsidePolygon" name="Utils::Shape2DUtils::isInsidePolygon">
+<area shape="rect" id="node2" href="$class_view_1_1_line_shape.html#a045dd04460414959cc4da4c98f4b0656" title="View::LineShape::occupies" alt="" coords="206,5,399,32"/>
+<area shape="rect" id="node3" href="$class_view_1_1_robot_shape.html#af8a8a89104747b3b37e863d59a8ccc41" title="View::RobotShape::occupies" alt="" coords="201,56,404,83"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="View::RectangleShape::asString" name="View::RectangleShape::asString">
+<area shape="rect" id="node2" href="$class_view_1_1_robot_shape.html#a658f1cc8c61b290905a0e8a15c7707d4" title="View::RobotShape::asString" alt="" coords="219,5,417,32"/>
+<area shape="rect" id="node3" href="$class_view_1_1_way_point_shape.html#a39df094d6d3b3d918470ba841cabcd6c" title="View::WayPointShape\l::asString" alt="" coords="237,57,399,98"/>
+<area shape="rect" id="node4" href="$class_view_1_1_goal_shape.html#aa6e576809d39c81cc6e746f66121450f" title="View::GoalShape::asString" alt="" coords="465,64,657,91"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="Model::Robot::intersects" name="Model::Robot::intersects">
+<area shape="rect" id="node2" href="$class_model_1_1_robot.html#ac4a63616c22f45faeb36a20a261b412b" title="Model::Robot::getRegion" alt="" coords="232,81,411,108"/>
+<area shape="rect" id="node3" href="$class_model_1_1_robot.html#ac639c66e4e6bdea56e0810dc4367bd4a" title="Model::Robot::getFrontRight" alt="" coords="459,5,660,32"/>
+<area shape="rect" id="node6" href="$class_model_1_1_robot.html#aadaac0a394d5c19a842386bf6b11bb8f" title="Model::Robot::getFrontLeft" alt="" coords="463,56,655,83"/>
+<area shape="rect" id="node7" href="$class_model_1_1_robot.html#a32d493d758d06a09930255788eddaedf" title="Model::Robot::getBackLeft" alt="" coords="463,107,655,133"/>
+<area shape="rect" id="node8" href="$class_model_1_1_robot.html#ac505ad64304e9e284906af1357d518e5" title="Model::Robot::getBackRight" alt="" coords="459,157,660,184"/>
+<area shape="rect" id="node4" href="$class_utils_1_1_shape2_d_utils.html#a0a6d71335cddbfb02f15603a9594f3e7" title="Utils::Shape2DUtils\l::getAngle" alt="" coords="708,74,856,115"/>
+<area shape="rect" id="node5" href="$namespace_utils.html#a96137dcc99a51f57ebc9aa4a597ee1ea" title="Utils::GetAngle" alt="" coords="904,81,1024,108"/>
+</map>
