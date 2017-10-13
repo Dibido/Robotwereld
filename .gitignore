@@ -1,3 +1,8 @@
+#Ignore build directory
+./linux/
+./mingw/
+#Ignore binary directory
+./Debug/
 # Prerequisites
 *.d
 
