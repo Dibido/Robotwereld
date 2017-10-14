@@ -35,6 +35,14 @@ bool MainApplication::OnInit()
 	MainApplication::setCommandlineArguments(argc, argv);
 
 	MainFrameWindow* frame = nullptr;
+
+	if (MainApplication::isArgGiven("-help"))
+	{
+		std::cout
+				<< "usage : [-server] [-client -address=[address] -port=[port]]"
+				<< std::endl;
+	}
+
 	if (MainApplication::isArgGiven("-worldname"))
 	{
 		Base::ObjectId::objectIdNamespace = MainApplication::getArg(
@@ -57,6 +65,17 @@ bool MainApplication::OnInit()
 	if (MainApplication::isArgGiven("-client"))
 	{
 		std::cout << "set Clientmode" << std::endl;
+	}
+	if (MainApplication::isArgGiven("-client")
+			&& MainApplication::isArgGiven("-address"))
+	{
+		std::cout << "Address : " << MainApplication::getArg("-address").value;
+
+	}
+	if (MainApplication::isArgGiven("-client")
+			&& MainApplication::isArgGiven("-port"))
+	{
+		std::cout << "Port : " << MainApplication::getArg("-port").value;
 	}
 
 	SetTopWindow(frame);
