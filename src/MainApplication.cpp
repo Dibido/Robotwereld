@@ -38,9 +38,10 @@ bool MainApplication::OnInit()
 
 	if (MainApplication::isArgGiven("-help"))
 	{
-		std::cout
-				<< "usage : [-server] [-client -address=[address] -port=[port]]"
+		std::cout << "usage : " << argv[0]
+				<< " [-local_port=[12345]] [-remote_ip=[localhost]] [remote_port=[12345]]"
 				<< std::endl;
+		exit(-1);
 	}
 
 	if (MainApplication::isArgGiven("-worldname"))
@@ -55,27 +56,6 @@ bool MainApplication::OnInit()
 	else
 	{
 		frame = new MainFrameWindow("RobotWorld");
-	}
-
-	if (MainApplication::isArgGiven("-server"))
-	{
-		std::cout << "set Servermode" << std::endl;
-	}
-
-	if (MainApplication::isArgGiven("-client"))
-	{
-		std::cout << "set Clientmode" << std::endl;
-	}
-	if (MainApplication::isArgGiven("-client")
-			&& MainApplication::isArgGiven("-address"))
-	{
-		std::cout << "Address : " << MainApplication::getArg("-address").value;
-
-	}
-	if (MainApplication::isArgGiven("-client")
-			&& MainApplication::isArgGiven("-port"))
-	{
-		std::cout << "Port : " << MainApplication::getArg("-port").value;
 	}
 
 	SetTopWindow(frame);
