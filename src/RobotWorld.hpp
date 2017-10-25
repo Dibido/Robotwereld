@@ -190,15 +190,20 @@ public:
 		EchoRequest, EchoResponse, SyncWorldRequest, SyncWorldResponse, CopyWorldRequest, CopyWorldResponse
 	};
 
-	enum buildType
+	enum copyType
 	{
-		aboutRobot, aboutWayPoints, aboutGoals, aboutWalls
+		Robot, WayPoint, Goal, Wall
 	};
 
 	RobotWorldPtr getRobotWorldPtr()
 	{
 		return robotWorldPtr;
 	}
+
+	/**
+	 * Function that fills the world based on a string.
+	 */
+	void fillWorld(std::string& messageBody);
 
 	/**
 	 *

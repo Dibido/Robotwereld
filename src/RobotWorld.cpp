@@ -11,6 +11,8 @@
 #include "Message.hpp"
 #include "MainApplication.hpp"
 
+#include <boost/algorithm/string.hpp>
+
 namespace Model
 {
 /**
@@ -28,7 +30,7 @@ RobotPtr RobotWorld::newRobot(const std::string& aName /*= "New Robot"*/,
 		const Point& aPosition /*= Point(-1,-1)*/,
 		bool aNotifyObservers /*= true*/)
 {
-	RobotPtr robot(new Robot(aName, aPosition));
+	RobotPtr robot(new Model::Robot(aName, aPosition));
 	robots.push_back(robot);
 	if (aNotifyObservers == true)
 	{
@@ -44,7 +46,7 @@ WayPointPtr RobotWorld::newWayPoint(
 		const Point& aPosition /*= Point(-1,-1)*/,
 		bool aNotifyObservers /*= true*/)
 {
-	WayPointPtr wayPoint(new WayPoint(aName, aPosition));
+	WayPointPtr wayPoint(new Model::WayPoint(aName, aPosition));
 	wayPoints.push_back(wayPoint);
 	if (aNotifyObservers == true)
 	{
@@ -59,7 +61,7 @@ GoalPtr RobotWorld::newGoal(const std::string& aName /*= "New Goal"*/,
 		const Point& aPosition /*= Point(-1,-1)*/,
 		bool aNotifyObservers /*= true*/)
 {
-	GoalPtr goal(new Goal(aName, aPosition));
+	GoalPtr goal(new Model::Goal(aName, aPosition));
 	goals.push_back(goal);
 	if (aNotifyObservers == true)
 	{
@@ -73,7 +75,7 @@ GoalPtr RobotWorld::newGoal(const std::string& aName /*= "New Goal"*/,
 WallPtr RobotWorld::newWall(const Point& aPoint1, const Point& aPoint2,
 		bool aNotifyObservers /*= true*/)
 {
-	WallPtr wall(new Wall(aPoint1, aPoint2));
+	WallPtr wall(new Model::Wall(aPoint1, aPoint2));
 	walls.push_back(wall);
 	if (aNotifyObservers == true)
 	{
@@ -393,19 +395,19 @@ std::string RobotWorld::asCopyString() const
 
 	for (RobotPtr ptr : robots)
 	{
-		os << aboutRobot << " " << ptr->asCopyString() << '\n';
+		os << Robot << " " << ptr->asCopyString() << '\n';
 	}
 	for (WayPointPtr ptr : wayPoints)
 	{
-		os << aboutWayPoints << " " << ptr->asCopyString() << '\n';
+		os << WayPoint << " " << ptr->asCopyString() << '\n';
 	}
 	for (GoalPtr ptr : goals)
 	{
-		os << aboutGoals << " " << ptr->asCopyString() << '\n';
+		os << Goal << " " << ptr->asCopyString() << '\n';
 	}
 	for (WallPtr ptr : walls)
 	{
-		os << aboutWalls << " " << ptr->asCopyString() << '\n';
+		os << Wall << " " << ptr->asCopyString() << '\n';
 	}
 
 	return os.str();
@@ -522,19 +524,88 @@ void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
 	{
-
 	case CopyWorldResponse:
-		Application::Logger::log(
+		{Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": CopyWorlds")
 						+ aMessage.getBody());
 		//TODO: read string and create objects.
+		std::string myString = aMessage.getBody();
+		fillWorld(myString);
 		break;
+		}
 	case SyncWorldResponse:
-		Application::Logger::log(
+		{
+			Application::Logger::log(
+
 				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
 						+ aMessage.getBody());
 		break;
+		}
+	default:
+		{
+			Application::Logger::log(
+						__PRETTY_FUNCTION__ + std::string(": Unknown response type")
+								+ aMessage.getBody());
+		break;
+		}
 	}
+}
+/**
+ *
+ */
+void Model::RobotWorld::fillWorld(std::string& messageBody)
+{
+	Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": InputWorld") + messageBody);
+	std::vector < std::string > lines;
+	boost::split(lines, messageBody, boost::is_any_of("\n"));
+
+	for (std::string line : lines)
+	{
+		if (!line.empty())
+		{
+			std::stringstream ss;
+			std::string aNewName;
+			unsigned long aNewX;
+			unsigned long aNewY;
+			unsigned long aNewSecondX;
+			unsigned long aNewSecondY;
+
+			switch (std::stoi(&line.at(0)))
+			{
+			case Robot:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				newRobot(("Robot"), Point(aNewX, aNewY));
+				break;
+			case WayPoint:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				newWayPoint(aNewName, Point(aNewX, aNewY), false);
+				break;
+			case Goal:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				newGoal(aNewName, Point(aNewX, aNewY), false);
+				break;
+			case Wall:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
+				newWall(Point(aNewX, aNewY), Point(aNewSecondX, aNewSecondY),
+						false);
+				break;
+			default:
+				Application::Logger::log("Unknown object");
+				Application::Logger::log(line);
+				break;
+			}
+		}
+	}
+	notifyObservers();
 }
 
 } // namespace Model
