@@ -6,535 +6,439 @@
 #include "Wall.hpp"
 #include <algorithm>
 
-#include "CommunicationService.hpp"
-#include "Client.hpp"
-#include "Message.hpp"
-#include "MainApplication.hpp"
-
 namespace Model
 {
-/**
- *
- */
-/* static */RobotWorld& RobotWorld::RobotWorld::getRobotWorld()
-{
-	static RobotWorld robotWorld;
-	return robotWorld;
-}
-/**
- *
- */
-RobotPtr RobotWorld::newRobot(const std::string& aName /*= "New Robot"*/,
-		const Point& aPosition /*= Point(-1,-1)*/,
-		bool aNotifyObservers /*= true*/)
-{
-	RobotPtr robot(new Robot(aName, aPosition));
-	robots.push_back(robot);
-	if (aNotifyObservers == true)
+	/**
+	 *
+	 */
+	/* static */RobotWorld& RobotWorld::RobotWorld::getRobotWorld()
 	{
-		notifyObservers();
+		static RobotWorld robotWorld;
+		return robotWorld;
 	}
-	return robot;
-}
-/**
- *
- */
-WayPointPtr RobotWorld::newWayPoint(
-		const std::string& aName /*= "new WayPoint"*/,
-		const Point& aPosition /*= Point(-1,-1)*/,
-		bool aNotifyObservers /*= true*/)
-{
-	WayPointPtr wayPoint(new WayPoint(aName, aPosition));
-	wayPoints.push_back(wayPoint);
-	if (aNotifyObservers == true)
+	/**
+	 *
+	 */
+	RobotPtr RobotWorld::newRobot(	const std::string& aName /*= "New Robot"*/,
+									const Point& aPosition /*= Point(-1,-1)*/,
+									bool aNotifyObservers /*= true*/)
 	{
-		notifyObservers();
-	}
-	return wayPoint;
-}
-/**
- *
- */
-GoalPtr RobotWorld::newGoal(const std::string& aName /*= "New Goal"*/,
-		const Point& aPosition /*= Point(-1,-1)*/,
-		bool aNotifyObservers /*= true*/)
-{
-	GoalPtr goal(new Goal(aName, aPosition));
-	goals.push_back(goal);
-	if (aNotifyObservers == true)
-	{
-		notifyObservers();
-	}
-	return goal;
-}
-/**
- *
- */
-WallPtr RobotWorld::newWall(const Point& aPoint1, const Point& aPoint2,
-		bool aNotifyObservers /*= true*/)
-{
-	WallPtr wall(new Wall(aPoint1, aPoint2));
-	walls.push_back(wall);
-	if (aNotifyObservers == true)
-	{
-		notifyObservers();
-	}
-	return wall;
-}
-/**
- *
- */
-void RobotWorld::deleteRobot(RobotPtr aRobot, bool aNotifyObservers /*= true*/)
-{
-	auto i = std::find_if(robots.begin(), robots.end(), [aRobot](RobotPtr r)
-	{
-		return aRobot->getName() == r->getName();
-	});
-	if (i != robots.end())
-	{
-		robots.erase(i);
+		RobotPtr robot( new Robot( aName, aPosition));
+		robots.push_back( robot);
 		if (aNotifyObservers == true)
 		{
 			notifyObservers();
 		}
+		return robot;
 	}
-}
-/**
- *
- */
-void RobotWorld::deleteWayPoint(WayPointPtr aWayPoint,
-		bool aNotifyObservers /*= true*/)
-{
-	auto i = std::find_if(wayPoints.begin(), wayPoints.end(),
-			[aWayPoint]( WayPointPtr w)
+	/**
+	 *
+	 */
+	WayPointPtr RobotWorld::newWayPoint(	const std::string& aName /*= "new WayPoint"*/,
+											const Point& aPosition /*= Point(-1,-1)*/,
+											bool aNotifyObservers /*= true*/)
+	{
+		WayPointPtr wayPoint(new WayPoint( aName, aPosition));
+		wayPoints.push_back( wayPoint);
+		if (aNotifyObservers == true)
+		{
+			notifyObservers();
+		}
+		return wayPoint;
+	}
+	/**
+	 *
+	 */
+	GoalPtr RobotWorld::newGoal(	const std::string& aName /*= "New Goal"*/,
+									const Point& aPosition /*= Point(-1,-1)*/,
+									bool aNotifyObservers /*= true*/)
+	{
+		GoalPtr goal( new Goal( aName, aPosition));
+		goals.push_back( goal);
+		if (aNotifyObservers == true)
+		{
+			notifyObservers();
+		}
+		return goal;
+	}
+	/**
+	 *
+	 */
+	WallPtr RobotWorld::newWall(const Point& aPoint1,
+								const Point& aPoint2,
+								bool aNotifyObservers /*= true*/)
+	{
+		WallPtr wall( new Wall( aPoint1, aPoint2));
+		walls.push_back( wall);
+		if (aNotifyObservers == true)
+		{
+			notifyObservers();
+		}
+		return wall;
+	}
+	/**
+	 *
+	 */
+	void RobotWorld::deleteRobot( 	RobotPtr aRobot,
+									bool aNotifyObservers /*= true*/)
+	{
+		auto i = std::find_if( robots.begin(), robots.end(), [aRobot](RobotPtr r)
+							   {
+									return aRobot->getName() == r->getName();
+							   });
+		if (i != robots.end())
+		{
+			robots.erase( i);
+			if (aNotifyObservers == true)
 			{
-				return aWayPoint->getName() == w->getName();
-			});
-	if (i != wayPoints.end())
-	{
-		wayPoints.erase(i);
-		if (aNotifyObservers == true)
-		{
-			notifyObservers();
+				notifyObservers();
+			}
 		}
 	}
-}
-/**
- *
- */
-void RobotWorld::deleteGoal(GoalPtr aGoal, bool aNotifyObservers /*= true*/)
-{
-	auto i = std::find_if(goals.begin(), goals.end(), [aGoal]( GoalPtr g)
+	/**
+	 *
+	 */
+	void RobotWorld::deleteWayPoint( 	WayPointPtr aWayPoint,
+										bool aNotifyObservers /*= true*/)
 	{
-		return aGoal->getName() == g->getName();
-	});
-	if (i != goals.end())
+		auto i = std::find_if( wayPoints.begin(), wayPoints.end(), [aWayPoint]( WayPointPtr w)
+							   {
+									return aWayPoint->getName() == w->getName();
+							   });
+		if (i != wayPoints.end())
+		{
+			wayPoints.erase( i);
+			if (aNotifyObservers == true)
+			{
+				notifyObservers();
+			}
+		}
+	}
+	/**
+	 *
+	 */
+	void RobotWorld::deleteGoal( 	GoalPtr aGoal,
+									bool aNotifyObservers /*= true*/)
 	{
-		goals.erase(i);
+		auto i = std::find_if( goals.begin(), goals.end(), [aGoal]( GoalPtr g)
+							   {
+			return aGoal->getName() == g->getName();
+							   });
+		if (i != goals.end())
+		{
+			goals.erase( i);
 
-		if (aNotifyObservers == true)
-		{
-			notifyObservers();
+			if (aNotifyObservers == true)
+			{
+				notifyObservers();
+			}
 		}
 	}
-}
-/**
- *
- */
-void RobotWorld::deleteWall(WallPtr aWall, bool aNotifyObservers /*= true*/)
-{
-	auto i = std::find_if(walls.begin(), walls.end(), [aWall]( WallPtr w)
+	/**
+	 *
+	 */
+	void RobotWorld::deleteWall( 	WallPtr aWall,
+									bool aNotifyObservers /*= true*/)
 	{
-		return
-		aWall->getPoint1() == w->getPoint1() &&
-		aWall->getPoint2() == w->getPoint2();
-	});
-	if (i != walls.end())
-	{
-		walls.erase(i);
+		auto i = std::find_if( walls.begin(), walls.end(), [aWall]( WallPtr w)
+							   {
+			return
+							aWall->getPoint1() == w->getPoint1() &&
+							aWall->getPoint2() == w->getPoint2();
+							   });
+		if (i != walls.end())
+		{
+			walls.erase( i);
 
-		if (aNotifyObservers == true)
-		{
-			notifyObservers();
+			if (aNotifyObservers == true)
+			{
+				notifyObservers();
+			}
 		}
 	}
-}
-/**
- *
- */
-RobotPtr RobotWorld::getRobot(const std::string& aName) const
-{
-	for (RobotPtr robot : robots)
+	/**
+	 *
+	 */
+	RobotPtr RobotWorld::getRobot( const std::string& aName) const
 	{
-		if (robot->getName() == aName)
+		for (RobotPtr robot : robots)
 		{
-			return robot;
+			if (robot->getName() == aName)
+			{
+				return robot;
+			}
 		}
+		return nullptr;
 	}
-	return nullptr;
-}
-/**
- *
- */
-RobotPtr RobotWorld::getRobot(const Base::ObjectId& anObjectId) const
-{
-	for (RobotPtr robot : robots)
+	/**
+	 *
+	 */
+	RobotPtr RobotWorld::getRobot( const Base::ObjectId& anObjectId) const
 	{
-		if (robot->getObjectId() == anObjectId)
+		for (RobotPtr robot : robots)
 		{
-			return robot;
+			if (robot->getObjectId() == anObjectId)
+			{
+				return robot;
+			}
 		}
+		return nullptr;
 	}
-	return nullptr;
-}
-/**
- *
- */
-WayPointPtr RobotWorld::getWayPoint(const std::string& aName) const
-{
-	for (WayPointPtr wayPoint : wayPoints)
+	/**
+	 *
+	 */
+	WayPointPtr RobotWorld::getWayPoint( const std::string& aName) const
 	{
-		if (wayPoint->getName() == aName)
+		for (WayPointPtr wayPoint : wayPoints)
 		{
-			return wayPoint;
+			if (wayPoint->getName() == aName)
+			{
+				return wayPoint;
+			}
 		}
+		return nullptr;
 	}
-	return nullptr;
-}
-/**
- *
- */
-WayPointPtr RobotWorld::getWayPoint(const Base::ObjectId& anObjectId) const
-{
-	for (WayPointPtr wayPoint : wayPoints)
+	/**
+	 *
+	 */
+	WayPointPtr RobotWorld::getWayPoint( const Base::ObjectId& anObjectId) const
 	{
-		if (wayPoint->getObjectId() == anObjectId)
+		for (WayPointPtr wayPoint : wayPoints)
 		{
-			return wayPoint;
+			if (wayPoint->getObjectId() == anObjectId)
+			{
+				return wayPoint;
+			}
 		}
+		return nullptr;
 	}
-	return nullptr;
-}
-/**
- *
- */
-GoalPtr RobotWorld::getGoal(const std::string& aName) const
-{
-	for (GoalPtr goal : goals)
+	/**
+	 *
+	 */
+	GoalPtr RobotWorld::getGoal( const std::string& aName) const
 	{
-		if (goal->getName() == aName)
+		for (GoalPtr goal : goals)
 		{
-			return goal;
+			if (goal->getName() == aName)
+			{
+				return goal;
+			}
 		}
+		return nullptr;
 	}
-	return nullptr;
-}
-/**
- *
- */
-GoalPtr RobotWorld::getGoal(const Base::ObjectId& anObjectId) const
-{
-	for (GoalPtr goal : goals)
+	/**
+	 *
+	 */
+	GoalPtr RobotWorld::getGoal( const Base::ObjectId& anObjectId) const
 	{
-		if (goal->getObjectId() == anObjectId)
+		for (GoalPtr goal : goals)
 		{
-			return goal;
+			if (goal->getObjectId() == anObjectId)
+			{
+				return goal;
+			}
 		}
+		return nullptr;
 	}
-	return nullptr;
-}
-/**
- *
- */
-WallPtr RobotWorld::getWall(const Base::ObjectId& anObjectId) const
-{
-	for (WallPtr wall : walls)
+	/**
+	 *
+	 */
+	WallPtr RobotWorld::getWall( const Base::ObjectId& anObjectId) const
 	{
-		if (wall->getObjectId() == anObjectId)
+		for (WallPtr wall: walls)
 		{
-			return wall;
+			if (wall->getObjectId() == anObjectId)
+			{
+				return wall;
+			}
 		}
-	}
-	return nullptr;
-}
-
-/**
- *
- */
-const std::vector<RobotPtr>& RobotWorld::getRobots() const
-{
-	return robots;
-}
-/**
- *
- */
-const std::vector<WayPointPtr>& RobotWorld::getWayPoints() const
-{
-	return wayPoints;
-}
-/**
- *
- */
-const std::vector<GoalPtr>& RobotWorld::getGoals() const
-{
-	return goals;
-}
-/**
- *
- */
-const std::vector<WallPtr>& RobotWorld::getWalls() const
-{
-	return walls;
-}
-/**
- *
- */
-void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
-{
-	RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
-
-	static Point coordinates[] =
-	{ Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200) };
-
-	for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
-	{
-		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1],
-				false);
+		return nullptr;
 	}
 
-	RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
-
-	notifyObservers();
-}
-/**
- *
- */
-void RobotWorld::unpopulate(bool aNotifyObservers /*= true*/)
-{
-	robots.clear();
-	wayPoints.clear();
-	goals.clear();
-	walls.clear();
-
-	if (aNotifyObservers)
+	/**
+	 *
+	 */
+	const std::vector< RobotPtr >& RobotWorld::getRobots() const
 	{
+		return robots;
+	}
+	/**
+	 *
+	 */
+	const std::vector< WayPointPtr >& RobotWorld::getWayPoints() const
+	{
+		return wayPoints;
+	}
+	/**
+	 *
+	 */
+	const std::vector< GoalPtr >& RobotWorld::getGoals() const
+	{
+		return goals;
+	}
+	/**
+	 *
+	 */
+	const std::vector< WallPtr >& RobotWorld::getWalls() const
+	{
+		return walls;
+	}
+	/**
+	 *
+	 */
+	void RobotWorld::populate( int aNumberOfWalls /*= 2*/)
+	{
+		RobotWorld::getRobotWorld().newGoal( "Goal", Point( 450, 450),false);
+		//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
+		
+		RobotWorld::getRobotWorld().newWayPoint( "WayPoint", Point( 350, 350),false);
+		
+		RobotWorld::getRobotWorld().newRobot( "Robot", Point( 50, 50),false);
+		//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
+		
+		RobotWorld::getRobotWorld().getRobot( "Robot")->setGoal("Goal");
+		//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
+		
+		RobotWorld::getRobotWorld().getRobot( "Robot")->setWayPoint("WayPoint");
+		
+
+		static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
+									   Point( 300, 100),
+									   Point( 350, 200) };
+
+		for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
+		{
+			RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
+		}
+
+
+
 		notifyObservers();
 	}
-}
-/**
- *
- */
-void RobotWorld::unpopulate(const std::vector<Base::ObjectId>& aKeepObjects,
-		bool aNotifyObservers /*= true*/)
-{
-	if (robots.size() > 0)
+	/**
+	 *
+	 */
+	void RobotWorld::unpopulate( bool aNotifyObservers /*= true*/)
 	{
-		robots.erase(
-				std::remove_if(robots.begin(), robots.end(),
-						[&aKeepObjects](RobotPtr aRobot)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aRobot->getObjectId()) == aKeepObjects.end();
-						}), robots.end());
-	}
-	if (wayPoints.size() > 0)
-	{
-		wayPoints.erase(
-				std::remove_if(wayPoints.begin(), wayPoints.end(),
-						[&aKeepObjects](WayPointPtr aWayPoint)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aWayPoint->getObjectId()) == aKeepObjects.end();
-						}), wayPoints.end());
-	}
-	if (goals.size() > 0)
-	{
-		goals.erase(
-				std::remove_if(goals.begin(), goals.end(),
-						[&aKeepObjects](GoalPtr aGoal)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aGoal->getObjectId()) == aKeepObjects.end();
-						}), goals.end());
-	}
-	if (walls.size() > 0)
-	{
-		walls.erase(
-				std::remove_if(walls.begin(), walls.end(),
-						[&aKeepObjects](WallPtr aWall)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aWall->getObjectId()) == aKeepObjects.end();
-						}), walls.end());
-	}
+		robots.clear();
+		wayPoints.clear();
+		goals.clear();
+		walls.clear();
 
-	if (aNotifyObservers)
-	{
-		notifyObservers();
-	}
-}
-/**
- *
- */
-std::string RobotWorld::asString() const
-{
-	return ModelObject::asString();
-}
-/*
- *
- */
-std::string RobotWorld::asCopyString() const
-{
-	std::ostringstream os;
-
-	for (RobotPtr ptr : robots)
-	{
-		os << aboutRobot << " " << ptr->asCopyString() << '\n';
-	}
-	for (WayPointPtr ptr : wayPoints)
-	{
-		os << aboutWayPoints << " " << ptr->asCopyString() << '\n';
-	}
-	for (GoalPtr ptr : goals)
-	{
-		os << aboutGoals << " " << ptr->asCopyString() << '\n';
-	}
-	for (WallPtr ptr : walls)
-	{
-		os << aboutWalls << " " << ptr->asCopyString() << '\n';
-	}
-
-	return os.str();
-}
-/**
- *
- */
-std::string RobotWorld::asDebugString() const
-{
-	std::ostringstream os;
-
-	os << asString() << '\n';
-
-	for (RobotPtr ptr : robots)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-	for (WayPointPtr ptr : wayPoints)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-	for (GoalPtr ptr : goals)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-	for (WallPtr ptr : walls)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-
-	return os.str();
-}
-/**
- *
- */
-RobotWorld::RobotWorld() :
-		communicating(false), robotWorldPtr(this)
-{
-}
-/**
- *
- */
-RobotWorld::~RobotWorld()
-{
-	// No notification while I am in the destruction mode!
-	disableNotification();
-	unpopulate();
-}
-/**
- *
- */
-void Model::RobotWorld::startCommunicating()
-{
-	if (!communicating)
-	{
-		communicating = true;
-
-		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port"))
+		if (aNotifyObservers)
 		{
-			localPort =
-					Application::MainApplication::getArg("-local_port").value;
+			notifyObservers();
+		}
+	}
+	/**
+	 *
+	 */
+	void RobotWorld::unpopulate(const std::vector<Base::ObjectId >& aKeepObjects,
+								bool aNotifyObservers /*= true*/)
+	{
+		if(robots.size()>0)
+		{
+			robots.erase(	std::remove_if(	robots.begin(),
+											robots.end(),
+											[&aKeepObjects](RobotPtr aRobot)
+											{
+											 return std::find(	aKeepObjects.begin(),
+																aKeepObjects.end(),
+																aRobot->getObjectId()) == aKeepObjects.end();
+											}),
+							robots.end());
+		}
+		if(wayPoints.size()>0)
+		{
+			wayPoints.erase(std::remove_if(	wayPoints.begin(),
+											wayPoints.end(),
+											[&aKeepObjects](WayPointPtr aWayPoint)
+											{
+											 return std::find(	aKeepObjects.begin(),
+																aKeepObjects.end(),
+																aWayPoint->getObjectId()) == aKeepObjects.end();
+											}),
+							wayPoints.end());
+		}
+		if(goals.size()>0)
+		{
+			goals.erase(	std::remove_if(	goals.begin(),
+											goals.end(),
+											[&aKeepObjects](GoalPtr aGoal)
+											{
+											 return std::find(	aKeepObjects.begin(),
+																aKeepObjects.end(),
+																aGoal->getObjectId()) == aKeepObjects.end();
+											}),
+							goals.end());
+		}
+		if(walls.size()>0)
+		{
+			walls.erase(	std::remove_if(	walls.begin(),
+											walls.end(),
+											[&aKeepObjects](WallPtr aWall)
+											{
+											 return std::find(	aKeepObjects.begin(),
+																aKeepObjects.end(),
+																aWall->getObjectId()) == aKeepObjects.end();
+											}),
+							walls.end());
 		}
 
-		Messaging::CommunicationService::getCommunicationService().runRequestHandler(
-				toPtr<RobotWorld>(), std::stoi(localPort));
-	}
-}
-
-void Model::RobotWorld::stopCommunicating()
-{
-	if (communicating)
-	{
-		communicating = false;
-
-		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port"))
+		if (aNotifyObservers)
 		{
-			localPort =
-					Application::MainApplication::getArg("-local_port").value;
+			notifyObservers();
+		}
+	}
+	/**
+	 *
+	 */
+	std::string RobotWorld::asString() const
+	{
+		return ModelObject::asString();
+	}
+	/**
+	 *
+	 */
+	std::string RobotWorld::asDebugString() const
+	{
+		std::ostringstream os;
+
+		os << asString() << '\n';
+
+		for( RobotPtr ptr : robots)
+		{
+			os << ptr->asDebugString() << '\n';
+		}
+		for( WayPointPtr ptr : wayPoints)
+		{
+			os << ptr->asDebugString() << '\n';
+		}
+		for( GoalPtr ptr : goals)
+		{
+			os << ptr->asDebugString() << '\n';
+		}
+		for( WallPtr ptr : walls)
+		{
+			os << ptr->asDebugString() << '\n';
 		}
 
-		Messaging::Client c1ient("localhost", localPort, toPtr<RobotWorld>());
-		Messaging::Message message(1, "stop");
-		c1ient.dispatchMessage(message);
+		return os.str();
 	}
-}
-
-void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
+	/**
+	 *
+	 */
+	RobotWorld::RobotWorld()
 	{
-	case CopyWorldRequest:
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
-						+ aMessage.getBody());
-		aMessage.setMessageType(CopyWorldResponse);
-		aMessage.setBody(this->asCopyString());
-		break;
-	case SyncWorldRequest:
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
-						+ aMessage.getBody());
-		aMessage.setMessageType(SyncWorldResponse);
-		aMessage.setBody("SyncResponse" + aMessage.asString());
-		break;
-
 	}
-}
-/**
- *
- */
-void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
+	/**
+	 *
+	 */
+	RobotWorld::~RobotWorld()
 	{
-
-	case CopyWorldResponse:
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds")
-						+ aMessage.getBody());
-		//TODO: read string and create objects.
-		break;
-	case SyncWorldResponse:
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
-						+ aMessage.getBody());
-		break;
+		// No notification while I am in the destruction mode!
+		disableNotification();
+		unpopulate();
 	}
-}
 
 } // namespace Model
