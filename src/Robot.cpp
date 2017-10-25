@@ -441,6 +441,18 @@ std::string Robot::asDebugString() const
 	return os.str();
 }
 /**
+ * Function to copy robot into a string
+ */
+std::string Robot::asCopyString() const
+{
+	std::ostringstream os;
+
+	os << name << " " << position.x << " " << position.y << " " << front.x
+			<< " " << front.y;
+
+	return os.str();
+}
+/**
  *
  */
 void Robot::drive()

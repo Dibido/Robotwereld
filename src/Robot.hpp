@@ -238,7 +238,7 @@ namespace Model
 			 */
 			virtual std::string asDebugString() const;
 			//@}
-
+			std::string asCopyString() const;
 			/**
 			 * @name The types of messages a Robot should understand
 			 */

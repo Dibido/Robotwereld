@@ -389,7 +389,26 @@ std::string RobotWorld::asString() const
  */
 std::string RobotWorld::asCopyString() const
 {
+	std::ostringstream os;
 
+	for (RobotPtr ptr : robots)
+	{
+		os << aboutRobot << " " << ptr->asCopyString() << '\n';
+	}
+	for (WayPointPtr ptr : wayPoints)
+	{
+		os << aboutWayPoints << " " << ptr->asCopyString() << '\n';
+	}
+	for (GoalPtr ptr : goals)
+	{
+		os << aboutGoals << " " << ptr->asCopyString() << '\n';
+	}
+	for (WallPtr ptr : walls)
+	{
+		os << aboutWalls << " " << ptr->asCopyString() << '\n';
+	}
+
+	return os.str();
 }
 /**
  *
@@ -481,14 +500,14 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 	{
 	case CopyWorldRequest:
 		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds")
+				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
 						+ aMessage.getBody());
 		aMessage.setMessageType(CopyWorldResponse);
-		aMessage.setBody("SyncResponse" + aMessage.asString());
+		aMessage.setBody(this->asCopyString());
 		break;
 	case SyncWorldRequest:
 		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+				__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
 						+ aMessage.getBody());
 		aMessage.setMessageType(SyncWorldResponse);
 		aMessage.setBody("SyncResponse" + aMessage.asString());
@@ -503,9 +522,17 @@ void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
 	{
-	case SyncWorldResponse:
-		break;
+
 	case CopyWorldResponse:
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": CopyWorlds")
+						+ aMessage.getBody());
+		//TODO: read string and create objects.
+		break;
+	case SyncWorldResponse:
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+						+ aMessage.getBody());
 		break;
 	}
 }
