@@ -263,8 +263,7 @@ Panel* MainFrameWindow::initialiseButtonPanel()
 	{	this->OnStopListening(anEvent);}), GBPosition(2, 2), GBSpan(1, 1),
 			EXPAND);
 	sizer->Add(makeButton(panel, "Sync World", [this](CommandEvent &anEvent)
-	{	this->OnSyncWorld(anEvent);}), GBPosition(3, 0), GBSpan(1, 1),
-			EXPAND);
+	{	this->OnSyncWorld(anEvent);}), GBPosition(3, 0), GBSpan(1, 1), EXPAND);
 
 	panel->SetSizerAndFit(sizer);
 
@@ -410,9 +409,7 @@ void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
 			"Robot");
 	if (robot)
 	{
-
-		std::string
-		remoteIpAdres = "localhost";
+		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
 
 		if (MainApplication::isArgGiven("-remote_ip"))

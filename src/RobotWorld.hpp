@@ -26,7 +26,7 @@ namespace Model
 	/**
 	 *
 	 */
-	class RobotWorld : 	public ModelObject
+	class RobotWorld : 	public ModelObject, public MessageHandler
 	{
 		public:
 			/**

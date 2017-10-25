@@ -362,6 +362,7 @@ void Robot::handleRequest(Messaging::Message& aMessage)
 				__PRETTY_FUNCTION__ + std::string(": SyncRequest"));
 		aMessage.setMessageType(SyncResponse);
 		aMessage.setBody("SyncResponse" + aMessage.asString());
+		//TODO: send all the items that are populated in the view.
 		break;
 	}
 	case EchoRequest:
