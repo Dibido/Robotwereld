@@ -96,6 +96,9 @@ namespace Application
 			void OnStartListening( CommandEvent& anEvent);
 			void OnSendMessage( CommandEvent& anEvent);
 			void OnStopListening( CommandEvent& anEvent);
+			void OnListenWorld( CommandEvent& anEvent);
+			void OnStopListenWorld( CommandEvent& anEvent);
+			void OnCopyWorld( CommandEvent& anEvent);
 			void OnSyncWorld( CommandEvent& anEvent);
 	};
 	//	class MainFrameWindow

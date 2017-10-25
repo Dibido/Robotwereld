@@ -1,8 +1,9 @@
 #ifndef ROBOTWORLD_HPP_
 #define ROBOTWORLD_HPP_
 
-#include "Config.hpp"
 #include <vector>
+#include <string>
+#include "Config.hpp"
 #include "ModelObject.hpp"
 #include "Point.hpp"
 #include "Message.hpp"
@@ -143,6 +144,10 @@ public:
 	 */
 	virtual std::string asString() const;
 	/**
+	 * Returns a copy-able string containing all the worlds objects.
+	 */
+	std::string asCopyString() const;
+	/**
 	 * Returns a description of the object with all data of the object usable for debugging
 	 */
 	virtual std::string asDebugString() const;
@@ -182,7 +187,7 @@ public:
 
 	enum MessageType
 	{
-		EchoRequest, EchoResponse,
+		EchoRequest, EchoResponse, SyncWorldRequest, SyncWorldResponse, CopyWorldRequest, CopyWorldResponse
 	};
 
 	enum buildType

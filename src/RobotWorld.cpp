@@ -6,6 +6,11 @@
 #include "Wall.hpp"
 #include <algorithm>
 
+#include "CommunicationService.hpp"
+#include "Client.hpp"
+#include "Message.hpp"
+#include "MainApplication.hpp"
+
 namespace Model
 {
 /**
@@ -379,6 +384,13 @@ std::string RobotWorld::asString() const
 {
 	return ModelObject::asString();
 }
+/*
+ *
+ */
+std::string RobotWorld::asCopyString() const
+{
+
+}
 /**
  *
  */
@@ -410,7 +422,8 @@ std::string RobotWorld::asDebugString() const
 /**
  *
  */
-RobotWorld::RobotWorld():communicating(false), robotWorldPtr(this)
+RobotWorld::RobotWorld() :
+		communicating(false), robotWorldPtr(this)
 {
 }
 /**
@@ -425,12 +438,62 @@ RobotWorld::~RobotWorld()
 /**
  *
  */
+void Model::RobotWorld::startCommunicating()
+{
+	if (!communicating)
+	{
+		communicating = true;
+
+		std::string localPort = "12345";
+		if (Application::MainApplication::isArgGiven("-local_port"))
+		{
+			localPort =
+					Application::MainApplication::getArg("-local_port").value;
+		}
+
+		Messaging::CommunicationService::getCommunicationService().runRequestHandler(
+				toPtr<RobotWorld>(), std::stoi(localPort));
+	}
+}
+
+void Model::RobotWorld::stopCommunicating()
+{
+	if (communicating)
+	{
+		communicating = false;
+
+		std::string localPort = "12345";
+		if (Application::MainApplication::isArgGiven("-local_port"))
+		{
+			localPort =
+					Application::MainApplication::getArg("-local_port").value;
+		}
+
+		Messaging::Client c1ient("localhost", localPort, toPtr<RobotWorld>());
+		Messaging::Message message(1, "stop");
+		c1ient.dispatchMessage(message);
+	}
+}
+
 void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
 	{
-//	case SyncWorldRequest:
-//		break;
+	case CopyWorldRequest:
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": CopyWorlds")
+						+ aMessage.getBody());
+		aMessage.setMessageType(CopyWorldResponse);
+		aMessage.setBody("SyncResponse" + aMessage.asString());
+		break;
+	case SyncWorldRequest:
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+						+ aMessage.getBody());
+		aMessage.setMessageType(SyncWorldResponse);
+		aMessage.setBody("SyncResponse" + aMessage.asString());
+		break;
+
 	}
 }
 /**
@@ -440,8 +503,10 @@ void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
 	{
-//	case SyncWorldResponse:
-//		break;
+	case SyncWorldResponse:
+		break;
+	case CopyWorldResponse:
+		break;
 	}
 }
 

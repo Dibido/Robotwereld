@@ -262,8 +262,17 @@ Panel* MainFrameWindow::initialiseButtonPanel()
 	sizer->Add(makeButton(panel, "Stop listening", [this](CommandEvent &anEvent)
 	{	this->OnStopListening(anEvent);}), GBPosition(2, 2), GBSpan(1, 1),
 			EXPAND);
+	sizer->Add(makeButton(panel, "Listen World", [this](CommandEvent &anEvent)
+	{	this->OnListenWorld(anEvent);}), GBPosition(3, 0), GBSpan(1, 1),
+			EXPAND);
+	sizer->Add(makeButton(panel, "Copy World", [this](CommandEvent &anEvent)
+	{	this->OnCopyWorld(anEvent);}), GBPosition(3, 1), GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel, "Sync World", [this](CommandEvent &anEvent)
-	{	this->OnSyncWorld(anEvent);}), GBPosition(3, 0), GBSpan(1, 1), EXPAND);
+	{	this->OnSyncWorld(anEvent);}), GBPosition(3, 2), GBSpan(1, 1), EXPAND);
+	sizer->Add(
+			makeButton(panel, "Stop Listen World", [this](CommandEvent &anEvent)
+			{	this->OnStopListenWorld(anEvent);}), GBPosition(3, 3),
+			GBSpan(1, 1), EXPAND);
 
 	panel->SetSizerAndFit(sizer);
 
@@ -400,14 +409,12 @@ void MainFrameWindow::OnStopListening(CommandEvent& UNUSEDPARAM(anEvent))
 	}
 }
 
-/**
- * TODO: Implement syncing worlds between instances.
- */
-void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
+
+void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent))
 {
-	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
-			"Robot");
-	if (robot)
+	Model::RobotWorldPtr worldptr =
+			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
 	{
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
@@ -420,12 +427,60 @@ void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
 		{
 			remotePort = MainApplication::getArg("-remote_port").value;
 		}
-
 		//Requests to sync the worlds.
-		Messaging::Client c1ient(remoteIpAdres, remotePort, robot);
-		Messaging::Message message(Model::Robot::MessageType::SyncRequest,
+		Messaging::Client client(remoteIpAdres, remotePort, worldptr);
+		Messaging::Message message(
+				Model::RobotWorld::MessageType::CopyWorldRequest,
+				"Request Copy.");
+		client.dispatchMessage(message);
+	}
+}
+/**
+ * TODO: Implement syncing worlds between instances.
+ */
+void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
+	Model::RobotWorldPtr worldptr =
+			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
+	{
+		std::string remoteIpAdres = "localhost";
+		std::string remotePort = "12345";
+
+		if (MainApplication::isArgGiven("-remote_ip"))
+		{
+			remoteIpAdres = MainApplication::getArg("-remote_ip").value;
+		}
+		if (MainApplication::isArgGiven("-remote_port"))
+		{
+			remotePort = MainApplication::getArg("-remote_port").value;
+		}
+		//Requests to sync the worlds.
+		Messaging::Client client(remoteIpAdres, remotePort, worldptr);
+		Messaging::Message message(
+				Model::RobotWorld::MessageType::SyncWorldRequest,
 				"Request Sync.");
-		c1ient.dispatchMessage(message);
+		client.dispatchMessage(message);
+	}
+}
+
+void MainFrameWindow::OnListenWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
+	Model::RobotWorldPtr worldptr =
+			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
+	{
+		worldptr->startCommunicating();
+	}
+}
+
+void MainFrameWindow::OnStopListenWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
+	Model::RobotWorldPtr worldptr =
+			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
+	{
+		worldptr->stopCommunicating();
 	}
 }
 } // namespace Application
