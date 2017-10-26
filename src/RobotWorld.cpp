@@ -291,20 +291,32 @@ const std::vector<WallPtr>& RobotWorld::getWalls() const
 /**
  *
  */
-void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
+void RobotWorld::populate( int aNumberOfWalls /*= 2*/)
 {
-	RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
+	RobotWorld::getRobotWorld().newGoal( "Goal", Point( 450, 450),false);
+	//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
+		
+	RobotWorld::getRobotWorld().newWayPoint( "WayPoint", Point( 350, 350),false);
+		
+	RobotWorld::getRobotWorld().newRobot( "Robot", Point( 50, 50),false);
+	//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
+		
+	RobotWorld::getRobotWorld().getRobot( "Robot")->setGoal("Goal");
+	//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
+		
+	RobotWorld::getRobotWorld().getRobot( "Robot")->setWayPoint("WayPoint");
+		
 
-	static Point coordinates[] =
-	{ Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200) };
+	static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
+								  Point( 300, 100),
+								   Point( 350, 200) };
 
 	for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 	{
-		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1],
-				false);
+		RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
 	}
 
-	RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
+
 
 	notifyObservers();
 }

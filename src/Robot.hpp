@@ -31,6 +31,9 @@ namespace Model
 
 	class Goal;
 	typedef std::shared_ptr<Goal> GoalPtr;
+	
+	class WayPoint;
+	typedef std::shared_ptr<WayPoint> WayPointPtr;
 
 	class Robot :	public AbstractAgent,
 					public Messaging::MessageHandler,
@@ -75,6 +78,10 @@ namespace Model
 			 */
 			void setSize(	const Size& aSize,
 							bool aNotifyObservers = true);
+							
+			void setGoal(std::string aGoal);
+			
+			void setWayPoint(std::string aWayPoint);
 			/**
 			 *
 			 */
@@ -255,15 +262,15 @@ namespace Model
 			/**
 			 *
 			 */
-			void drive();
+			void drive(WayPointPtr waypointArrived);
 			/**
 			 *
 			 */
-			void calculateRoute(GoalPtr aGoal);
+			void calculateRoute(WayPointPtr aGoal);
 			/**
 			 *
 			 */
-			bool arrived(GoalPtr aGoal);
+			bool arrived(WayPointPtr aGoal);
 			/**
 			 *
 			 */
@@ -278,6 +285,7 @@ namespace Model
 			float speed;
 
 			GoalPtr goal;
+			WayPointPtr waypoint;
 			PathAlgorithm::AStar astar;
 			PathAlgorithm::Path path;
 

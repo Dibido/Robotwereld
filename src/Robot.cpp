@@ -79,6 +79,16 @@ void Robot::setName(const std::string& aName, bool aNotifyObservers /*= true*/)
 	}
 
 }
+
+void Robot::setGoal(std::string aGoal)
+{
+	goal = RobotWorld::getRobotWorld().getGoal(aGoal);
+}
+	
+void Robot::setWayPoint(std::string aWayPoint)
+{
+	waypoint = RobotWorld::getRobotWorld().getWayPoint(aWayPoint);
+}
 /**
  *
  */
@@ -172,10 +182,13 @@ void Robot::startDriving()
 {
 	driving = true;
 
-	goal = RobotWorld::getRobotWorld().getGoal("Goal");
-	calculateRoute(goal);
+	//goal = RobotWorld::getRobotWorld().getGoal( "Goal");
+		
+	calculateRoute(waypoint);
+	drive(waypoint);
 
-	drive();
+	calculateRoute(goal);		
+	drive(goal);
 }
 /**
  *
@@ -455,7 +468,7 @@ std::string Robot::asCopyString() const
 /**
  *
  */
-void Robot::drive()
+void Robot::drive(WayPointPtr waypointArrived)
 {
 	try
 	{
@@ -478,7 +491,7 @@ void Robot::drive()
 			position.x = vertex.x;
 			position.y = vertex.y;
 
-			if (arrived(goal) || collision())
+			if (arrived(waypointArrived) || collision())
 			{
 				Application::Logger::log(
 						__PRETTY_FUNCTION__
@@ -513,7 +526,7 @@ void Robot::drive()
 /**
  *
  */
-void Robot::calculateRoute(GoalPtr aGoal)
+void Robot::calculateRoute(WayPointPtr aGoal)
 {
 	path.clear();
 	if (aGoal)
@@ -532,9 +545,9 @@ void Robot::calculateRoute(GoalPtr aGoal)
 /**
  *
  */
-bool Robot::arrived(GoalPtr aGoal)
+bool Robot::arrived(WayPointPtr aGoal)
 {
-	if (aGoal && intersects(aGoal->getRegion()))
+	if (aGoal && intersects( aGoal->getRegion()))
 	{
 		return true;
 	}

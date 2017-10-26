@@ -56,6 +56,7 @@ namespace PathAlgorithm
 		static int yOffset[] = { 1, 1, 0, -1, -1, -1, 0, 1 };
 
 		const std::vector< Model::WallPtr >& walls = Model::RobotWorld::getRobotWorld().getWalls();
+		const std::vector< Model::RobotPtr >& robots = Model::RobotWorld::getRobotWorld().getRobots();
 		std::vector< Vertex > neighbours;
 
 		for (int i = 0; i < 8; ++i)
@@ -71,6 +72,16 @@ namespace PathAlgorithm
 					break;
 				}
 			}
+			/*
+			for (Model::RobotPtr robot : robots)
+			{
+				if (Utils::Shape2DUtils::isOnLine( wall->getPoint1(), wall->getPoint2(), vertex.asPoint(), aFreeRadius))
+				{
+					addToNeigbours = false;
+					break;
+				}
+			}
+			*/
 			if (addToNeigbours == true)
 			{
 				neighbours.push_back( vertex);
