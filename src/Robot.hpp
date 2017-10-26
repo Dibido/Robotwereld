@@ -31,9 +31,6 @@ namespace Model
 
 	class Goal;
 	typedef std::shared_ptr<Goal> GoalPtr;
-	
-	class WayPoint;
-	typedef std::shared_ptr<WayPoint> WayPointPtr;
 
 	class Robot :	public AbstractAgent,
 					public Messaging::MessageHandler,
@@ -90,13 +87,9 @@ namespace Model
 			 */
 			void setPosition(	const Point& aPosition,
 								bool aNotifyObservers = true);
-								
-			void setGoal(std::string aGoal);
 			/**
 			 *
 			 */
-			void setWayPoint(std::string aWayPoint); 
-			 
 			BoundedVector getFront() const;
 			/**
 			 *
@@ -245,7 +238,7 @@ namespace Model
 			 */
 			virtual std::string asDebugString() const;
 			//@}
-
+			std::string asCopyString() const;
 			/**
 			 * @name The types of messages a Robot should understand
 			 */
@@ -253,22 +246,24 @@ namespace Model
 			enum MessageType
 			{
 				EchoRequest,
-				EchoResponse
+				EchoResponse,
+				SyncRequest,
+				SyncResponse
 			};
 
 		protected:
 			/**
 			 *
 			 */
-			void drive(WayPointPtr waypointArrived);
+			void drive();
 			/**
 			 *
 			 */
-			void calculateRoute(WayPointPtr aGoal);
+			void calculateRoute(GoalPtr aGoal);
 			/**
 			 *
 			 */
-			bool arrived(WayPointPtr aGoal);
+			bool arrived(GoalPtr aGoal);
 			/**
 			 *
 			 */
@@ -283,7 +278,6 @@ namespace Model
 			float speed;
 
 			GoalPtr goal;
-			WayPointPtr waypoint;
 			PathAlgorithm::AStar astar;
 			PathAlgorithm::Path path;
 
