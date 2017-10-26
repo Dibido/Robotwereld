@@ -474,6 +474,8 @@ void Model::RobotWorld::startCommunicating()
 
 		Messaging::CommunicationService::getCommunicationService().runRequestHandler(
 				toPtr<RobotWorld>(), std::stoi(localPort));
+		Application::Logger::log("Started listening for world");
+
 	}
 }
 
@@ -493,6 +495,7 @@ void Model::RobotWorld::stopCommunicating()
 		Messaging::Client c1ient("localhost", localPort, toPtr<RobotWorld>());
 		Messaging::Message message(1, "stop");
 		c1ient.dispatchMessage(message);
+		Application::Logger::log("Stopped listening for world");
 	}
 }
 
@@ -605,6 +608,7 @@ void Model::RobotWorld::fillWorld(std::string& messageBody)
 			}
 		}
 	}
+	Application::Logger::log("Copied world");
 	notifyObservers();
 }
 
