@@ -1,6 +1,7 @@
 #Ignore build directory
 ./linux/
 ./mingw/
+./mingwnative/
 #Ignore binary directory
 ./Debug/
 # Prerequisites
