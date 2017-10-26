@@ -252,26 +252,27 @@ Panel* MainFrameWindow::initialiseButtonPanel()
 	sizer->Add(makeButton(panel, "Stop robot", [this](CommandEvent &anEvent)
 	{	this->OnStopRobot(anEvent);}), GBPosition(1, 1), GBSpan(1, 1), EXPAND);
 
-	sizer->Add(
-			makeButton(panel, "Start listening", [this](CommandEvent &anEvent)
-			{	this->OnStartListening(anEvent);}), GBPosition(2, 0),
-			GBSpan(1, 1), EXPAND);
-	sizer->Add(makeButton(panel, "Send message", [this](CommandEvent &anEvent)
-	{	this->OnSendMessage(anEvent);}), GBPosition(2, 1), GBSpan(1, 1),
-			EXPAND);
-	sizer->Add(makeButton(panel, "Stop listening", [this](CommandEvent &anEvent)
-	{	this->OnStopListening(anEvent);}), GBPosition(2, 2), GBSpan(1, 1),
-			EXPAND);
+//Removed because the port is already in use when listening to the world.
+//	sizer->Add(
+//			makeButton(panel, "Start listening", [this](CommandEvent &anEvent)
+//			{	this->OnStartListening(anEvent);}), GBPosition(2, 0),
+//			GBSpan(1, 1), EXPAND);
+//	sizer->Add(makeButton(panel, "Send message", [this](CommandEvent &anEvent)
+//	{	this->OnSendMessage(anEvent);}), GBPosition(2, 1), GBSpan(1, 1),
+//			EXPAND);
+//	sizer->Add(makeButton(panel, "Stop listening", [this](CommandEvent &anEvent)
+//	{	this->OnStopListening(anEvent);}), GBPosition(2, 2), GBSpan(1, 1),
+//			EXPAND);
 	sizer->Add(makeButton(panel, "Listen World", [this](CommandEvent &anEvent)
-	{	this->OnListenWorld(anEvent);}), GBPosition(3, 0), GBSpan(1, 1),
+	{	this->OnListenWorld(anEvent);}), GBPosition(2, 0), GBSpan(1, 1),
 			EXPAND);
 	sizer->Add(makeButton(panel, "Copy World", [this](CommandEvent &anEvent)
-	{	this->OnCopyWorld(anEvent);}), GBPosition(3, 1), GBSpan(1, 1), EXPAND);
+	{	this->OnCopyWorld(anEvent);}), GBPosition(2, 1), GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel, "Sync World", [this](CommandEvent &anEvent)
-	{	this->OnSyncWorld(anEvent);}), GBPosition(3, 2), GBSpan(1, 1), EXPAND);
+	{	this->OnSyncWorld(anEvent);}), GBPosition(2, 2), GBSpan(1, 1), EXPAND);
 	sizer->Add(
 			makeButton(panel, "Stop Listen World", [this](CommandEvent &anEvent)
-			{	this->OnStopListenWorld(anEvent);}), GBPosition(3, 3),
+			{	this->OnStopListenWorld(anEvent);}), GBPosition(2, 3),
 			GBSpan(1, 1), EXPAND);
 
 	panel->SetSizerAndFit(sizer);
@@ -320,12 +321,38 @@ void MainFrameWindow::OnAbout(CommandEvent& UNUSEDPARAM(anEvent))
  */
 void MainFrameWindow::OnStartRobot(CommandEvent& UNUSEDPARAM(anEvent))
 {
-	Logger::log("Attempting to start Robot...");
+	Logger::log("Attempting to start our Robot");
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
 			"Robot");
 	if (robot && !robot->isActing())
 	{
 		robot->startActing();
+	}
+	Model::RobotWorldPtr worldptr =
+			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
+	{
+		if (worldptr->isCommunicating())
+		{
+			Logger::log("Attempting to start the other Robot");
+			std::string remoteIpAdres = "localhost";
+			std::string remotePort = "12345";
+
+			if (MainApplication::isArgGiven("-remote_ip"))
+			{
+				remoteIpAdres = MainApplication::getArg("-remote_ip").value;
+			}
+			if (MainApplication::isArgGiven("-remote_port"))
+			{
+				remotePort = MainApplication::getArg("-remote_port").value;
+			}
+
+			//We are sending the message to start the other robot.
+			Messaging::Client c1ient(remoteIpAdres, remotePort, robot);
+			Messaging::Message message(Model::Robot::MessageType::StartRequest,
+					"StartRequest");
+			c1ient.dispatchMessage(message);
+		}
 	}
 }
 /**
@@ -366,6 +393,7 @@ void MainFrameWindow::OnStartListening(CommandEvent& UNUSEDPARAM(anEvent))
 	{
 		robot->startCommunicating();
 	}
+
 }
 /**
  *
@@ -408,7 +436,6 @@ void MainFrameWindow::OnStopListening(CommandEvent& UNUSEDPARAM(anEvent))
 		thijs->stopCommunicating();
 	}
 }
-
 
 void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent))
 {

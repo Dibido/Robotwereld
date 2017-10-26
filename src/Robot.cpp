@@ -382,9 +382,29 @@ void Robot::handleRequest(Messaging::Message& aMessage)
 	{
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
-
 		aMessage.setMessageType(EchoResponse);
 		aMessage.setBody(": case 1 " + aMessage.asString());
+		break;
+	}
+	case StartRequest:
+	{
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": StartRequest"));
+		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
+				"Robot");
+		if (robot && !robot->isActing())
+		{
+			robot->startActing();
+		}
+		aMessage.setMessageType(StartResponse);
+		if (this->isDriving())
+		{
+			aMessage.setBody("Started remote robot.");
+		}
+		else
+		{
+			aMessage.setBody("Unable to start remote robot.");
+		}
 		break;
 	}
 	default:
@@ -419,6 +439,11 @@ void Robot::handleResponse(const Messaging::Message& aMessage)
 
 		break;
 	}
+	case StartResponse:
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": started remote robot")
+						+ aMessage.asString());
+		break;
 	default:
 	{
 		Application::Logger::log(
