@@ -458,7 +458,7 @@ void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent))
 		Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 		Messaging::Message message(
 				Model::RobotWorld::MessageType::CopyWorldRequest,
-				"Request Copy.");
+				Model::RobotWorld::getRobotWorld().asCopyString());
 		client.dispatchMessage(message);
 	}
 }

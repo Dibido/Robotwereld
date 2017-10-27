@@ -291,32 +291,29 @@ const std::vector<WallPtr>& RobotWorld::getWalls() const
 /**
  *
  */
-void RobotWorld::populate( int aNumberOfWalls /*= 2*/)
+void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 {
-	RobotWorld::getRobotWorld().newGoal( "Goal", Point( 450, 450),false);
+	RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
 	//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
-		
-	RobotWorld::getRobotWorld().newWayPoint( "WayPoint", Point( 350, 350),false);
-		
-	RobotWorld::getRobotWorld().newRobot( "Robot", Point( 50, 50),false);
-	//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
-		
-	RobotWorld::getRobotWorld().getRobot( "Robot")->setGoal("Goal");
-	//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
-		
-	RobotWorld::getRobotWorld().getRobot( "Robot")->setWayPoint("WayPoint");
-		
 
-	static Point coordinates[] = { Point( 100, 400), Point( 350, 300),
-								  Point( 300, 100),
-								   Point( 350, 200) };
+	RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350), false);
+
+	RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
+	//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
+
+	RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
+	//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
+
+	RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint("WayPoint");
+
+	static Point coordinates[] =
+	{ Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200) };
 
 	for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 	{
-		RobotWorld::getRobotWorld().newWall( coordinates[i], coordinates[i + 1],false);
+		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1],
+				false);
 	}
-
-
 
 	notifyObservers();
 }
@@ -516,20 +513,26 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 	switch (aMessage.getMessageType())
 	{
 	case CopyWorldRequest:
+	{
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
 						+ aMessage.getBody());
+		//Read string and create objects.
+		std::string myString = aMessage.getBody();
+		fillWorld(myString);
 		aMessage.setMessageType(CopyWorldResponse);
 		aMessage.setBody(this->asCopyString());
+	}
 		break;
 	case SyncWorldRequest:
+	{
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
 						+ aMessage.getBody());
 		aMessage.setMessageType(SyncWorldResponse);
 		aMessage.setBody("SyncResponse" + aMessage.asString());
 		break;
-
+	}
 	}
 }
 /**
@@ -540,29 +543,29 @@ void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
 	switch (aMessage.getMessageType())
 	{
 	case CopyWorldResponse:
-		{Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds")
+	{
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
 						+ aMessage.getBody());
-		//TODO: read string and create objects.
+		//Read string and create objects.
 		std::string myString = aMessage.getBody();
 		fillWorld(myString);
 		break;
-		}
+	}
 	case SyncWorldResponse:
-		{
-			Application::Logger::log(
+	{
+		Application::Logger::log(
 
-				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+		__PRETTY_FUNCTION__ + std::string(": SyncWorlds") + aMessage.getBody());
+		break;
+	}
+	default:
+	{
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": Unknown response type")
 						+ aMessage.getBody());
 		break;
-		}
-	default:
-		{
-			Application::Logger::log(
-						__PRETTY_FUNCTION__ + std::string(": Unknown response type")
-								+ aMessage.getBody());
-		break;
-		}
+	}
 	}
 }
 /**
