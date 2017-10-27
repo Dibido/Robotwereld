@@ -519,9 +519,9 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 						+ aMessage.getBody());
 		//Read string and create objects.
 		std::string myString = aMessage.getBody();
-		fillWorld(myString);
 		aMessage.setMessageType(CopyWorldResponse);
 		aMessage.setBody(this->asCopyString());
+		fillWorld(myString);
 	}
 		break;
 	case SyncWorldRequest:
