@@ -293,7 +293,7 @@ const std::vector<WallPtr>& RobotWorld::getWalls() const
  */
 void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 {
-	if (Application::MainApplication::isArgGiven("-worldname")
+	if (Application::MainApplication::isArgGiven("-worldname"))
 			{
 				if(Application::MainApplication::getArg("-worldname").value == "instance1")
 				{
@@ -318,18 +318,10 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 				{
 					RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 50),
 							false);
-					RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50),
+					RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 450),
 							false);
 					RobotWorld::getRobotWorld().getRobot("Robot")->setGoal(
 							"Goal");
-					static Point coordinates[] =
-					{ Point(100, 400), Point(350, 300), Point(300, 100), Point(
-							350, 200) };
-					for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
-					{
-						RobotWorld::getRobotWorld().newWall(coordinates[i],
-								coordinates[i + 1], false);
-					}
 					notifyObservers();
 					return;
 				}
