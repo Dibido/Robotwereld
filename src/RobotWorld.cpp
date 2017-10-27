@@ -293,338 +293,388 @@ const std::vector<WallPtr>& RobotWorld::getWalls() const
  */
 void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 {
-	RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
-	//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
-
-	RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350), false);
-
-	RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
-	//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
-
-	RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
-	//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
-
-	RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint("WayPoint");
-
-	static Point coordinates[] =
-	{ Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200) };
-
-	for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
-	{
-		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1],
-				false);
-	}
-
-	notifyObservers();
-}
-/**
- *
- */
-void RobotWorld::unpopulate(bool aNotifyObservers /*= true*/)
-{
-	robots.clear();
-	wayPoints.clear();
-	goals.clear();
-	walls.clear();
-
-	if (aNotifyObservers)
-	{
-		notifyObservers();
-	}
-}
-/**
- *
- */
-void RobotWorld::unpopulate(const std::vector<Base::ObjectId>& aKeepObjects,
-		bool aNotifyObservers /*= true*/)
-{
-	if (robots.size() > 0)
-	{
-		robots.erase(
-				std::remove_if(robots.begin(), robots.end(),
-						[&aKeepObjects](RobotPtr aRobot)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aRobot->getObjectId()) == aKeepObjects.end();
-						}), robots.end());
-	}
-	if (wayPoints.size() > 0)
-	{
-		wayPoints.erase(
-				std::remove_if(wayPoints.begin(), wayPoints.end(),
-						[&aKeepObjects](WayPointPtr aWayPoint)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aWayPoint->getObjectId()) == aKeepObjects.end();
-						}), wayPoints.end());
-	}
-	if (goals.size() > 0)
-	{
-		goals.erase(
-				std::remove_if(goals.begin(), goals.end(),
-						[&aKeepObjects](GoalPtr aGoal)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aGoal->getObjectId()) == aKeepObjects.end();
-						}), goals.end());
-	}
-	if (walls.size() > 0)
-	{
-		walls.erase(
-				std::remove_if(walls.begin(), walls.end(),
-						[&aKeepObjects](WallPtr aWall)
-						{
-							return std::find( aKeepObjects.begin(),
-									aKeepObjects.end(),
-									aWall->getObjectId()) == aKeepObjects.end();
-						}), walls.end());
-	}
-
-	if (aNotifyObservers)
-	{
-		notifyObservers();
-	}
-}
-/**
- *
- */
-std::string RobotWorld::asString() const
-{
-	return ModelObject::asString();
-}
-/*
- *
- */
-std::string RobotWorld::asCopyString() const
-{
-	std::ostringstream os;
-
-	for (RobotPtr ptr : robots)
-	{
-		os << Robot << " " << ptr->asCopyString() << '\n';
-	}
-	for (WayPointPtr ptr : wayPoints)
-	{
-		os << WayPoint << " " << ptr->asCopyString() << '\n';
-	}
-	for (GoalPtr ptr : goals)
-	{
-		os << Goal << " " << ptr->asCopyString() << '\n';
-	}
-	for (WallPtr ptr : walls)
-	{
-		os << Wall << " " << ptr->asCopyString() << '\n';
-	}
-
-	return os.str();
-}
-/**
- *
- */
-std::string RobotWorld::asDebugString() const
-{
-	std::ostringstream os;
-
-	os << asString() << '\n';
-
-	for (RobotPtr ptr : robots)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-	for (WayPointPtr ptr : wayPoints)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-	for (GoalPtr ptr : goals)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-	for (WallPtr ptr : walls)
-	{
-		os << ptr->asDebugString() << '\n';
-	}
-
-	return os.str();
-}
-/**
- *
- */
-RobotWorld::RobotWorld() :
-		communicating(false), robotWorldPtr(this)
-{
-}
-/**
- *
- */
-RobotWorld::~RobotWorld()
-{
-	// No notification while I am in the destruction mode!
-	disableNotification();
-	unpopulate();
-}
-/**
- *
- */
-void Model::RobotWorld::startCommunicating()
-{
-	if (!communicating)
-	{
-		communicating = true;
-
-		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port"))
-		{
-			localPort =
-					Application::MainApplication::getArg("-local_port").value;
-		}
-
-		Messaging::CommunicationService::getCommunicationService().runRequestHandler(
-				toPtr<RobotWorld>(), std::stoi(localPort));
-		Application::Logger::log("Started listening for world");
-
-	}
-}
-
-void Model::RobotWorld::stopCommunicating()
-{
-	if (communicating)
-	{
-		communicating = false;
-
-		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port"))
-		{
-			localPort =
-					Application::MainApplication::getArg("-local_port").value;
-		}
-
-		Messaging::Client c1ient("localhost", localPort, toPtr<RobotWorld>());
-		Messaging::Message message(1, "stop");
-		c1ient.dispatchMessage(message);
-		Application::Logger::log("Stopped listening for world");
-	}
-}
-
-void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case CopyWorldRequest:
-	{
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
-						+ aMessage.getBody());
-		//Read string and create objects.
-		std::string myString = aMessage.getBody();
-		aMessage.setMessageType(CopyWorldResponse);
-		aMessage.setBody(this->asCopyString());
-		fillWorld(myString);
-	}
-		break;
-	case SyncWorldRequest:
-	{
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
-						+ aMessage.getBody());
-		aMessage.setMessageType(SyncWorldResponse);
-		aMessage.setBody("SyncResponse" + aMessage.asString());
-		break;
-	}
-	}
-}
-/**
- *
- */
-void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case CopyWorldResponse:
-	{
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
-						+ aMessage.getBody());
-		//Read string and create objects.
-		std::string myString = aMessage.getBody();
-		fillWorld(myString);
-		break;
-	}
-	case SyncWorldResponse:
-	{
-		Application::Logger::log(
-
-		__PRETTY_FUNCTION__ + std::string(": SyncWorlds") + aMessage.getBody());
-		break;
-	}
-	default:
-	{
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": Unknown response type")
-						+ aMessage.getBody());
-		break;
-	}
-	}
-}
-/**
- *
- */
-void Model::RobotWorld::fillWorld(std::string& messageBody)
-{
-	Application::Logger::log(
-			__PRETTY_FUNCTION__ + std::string(": InputWorld") + messageBody);
-	std::vector < std::string > lines;
-	boost::split(lines, messageBody, boost::is_any_of("\n"));
-
-	for (std::string line : lines)
-	{
-		if (!line.empty())
-		{
-			std::stringstream ss;
-			std::string aNewName;
-			unsigned long aNewX;
-			unsigned long aNewY;
-			unsigned long aNewSecondX;
-			unsigned long aNewSecondY;
-
-			switch (std::stoi(&line.at(0)))
+	if (Application::MainApplication::isArgGiven("-worldname")
 			{
-			case Robot:
-				line.erase(line.begin());
-				ss << line;
-				ss >> aNewName >> aNewX >> aNewY;
-				newRobot(("Robot"), Point(aNewX, aNewY));
-				break;
-			case WayPoint:
-				line.erase(line.begin());
-				ss << line;
-				ss >> aNewName >> aNewX >> aNewY;
-				newWayPoint(aNewName, Point(aNewX, aNewY), false);
-				break;
-			case Goal:
-				line.erase(line.begin());
-				ss << line;
-				ss >> aNewName >> aNewX >> aNewY;
-				newGoal(aNewName, Point(aNewX, aNewY), false);
-				break;
-			case Wall:
-				line.erase(line.begin());
-				ss << line;
-				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
-				newWall(Point(aNewX, aNewY), Point(aNewSecondX, aNewSecondY),
+				if(Application::MainApplication::getArg("-worldname").value == "instance1")
+				{
+					RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
+					RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
+							false);
+					RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
+					RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
+					RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint("WayPoint");
+					static Point coordinates[] =
+					{	Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200)};
+					for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
+					{
+						RobotWorld::getRobotWorld().newWall(coordinates[i],
+								coordinates[i + 1], false);
+					}
+					notifyObservers();
+					return;
+				}
+				if (Application::MainApplication::getArg("-worldname").value
+						== "instance2")
+				{
+					RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 50),
+							false);
+					RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50),
+							false);
+					RobotWorld::getRobotWorld().getRobot("Robot")->setGoal(
+							"Goal");
+					static Point coordinates[] =
+					{ Point(100, 400), Point(350, 300), Point(300, 100), Point(
+							350, 200) };
+					for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
+					{
+						RobotWorld::getRobotWorld().newWall(coordinates[i],
+								coordinates[i + 1], false);
+					}
+					notifyObservers();
+					return;
+				}
+			}
+			else
+			{
+				RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
+				//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
+
+				RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
 						false);
-				break;
-			default:
-				Application::Logger::log("Unknown object");
-				Application::Logger::log(line);
-				break;
+
+				RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
+				//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
+
+				RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
+				//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
+
+				RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint("WayPoint");
+
+				static Point coordinates[] =
+				{	Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200)};
+
+				for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
+				{
+					RobotWorld::getRobotWorld().newWall(coordinates[i],
+							coordinates[i + 1], false);
+				}
+				notifyObservers();
 			}
 		}
-	}
-	Application::Logger::log("Copied world");
-	notifyObservers();
-}
+		/**
+		 *
+		 */
+		void RobotWorld::unpopulate(bool aNotifyObservers /*= true*/)
+		{
+			robots.clear();
+			wayPoints.clear();
+			goals.clear();
+			walls.clear();
 
-} // namespace Model
+			if (aNotifyObservers)
+			{
+				notifyObservers();
+			}
+		}
+		/**
+		 *
+		 */
+		void RobotWorld::unpopulate(
+				const std::vector<Base::ObjectId>& aKeepObjects,
+				bool aNotifyObservers /*= true*/)
+		{
+			if (robots.size() > 0)
+			{
+				robots.erase(
+						std::remove_if(robots.begin(), robots.end(),
+								[&aKeepObjects](RobotPtr aRobot)
+								{
+									return std::find( aKeepObjects.begin(),
+											aKeepObjects.end(),
+											aRobot->getObjectId()) == aKeepObjects.end();
+								}), robots.end());
+			}
+			if (wayPoints.size() > 0)
+			{
+				wayPoints.erase(
+						std::remove_if(wayPoints.begin(), wayPoints.end(),
+								[&aKeepObjects](WayPointPtr aWayPoint)
+								{
+									return std::find( aKeepObjects.begin(),
+											aKeepObjects.end(),
+											aWayPoint->getObjectId()) == aKeepObjects.end();
+								}), wayPoints.end());
+			}
+			if (goals.size() > 0)
+			{
+				goals.erase(
+						std::remove_if(goals.begin(), goals.end(),
+								[&aKeepObjects](GoalPtr aGoal)
+								{
+									return std::find( aKeepObjects.begin(),
+											aKeepObjects.end(),
+											aGoal->getObjectId()) == aKeepObjects.end();
+								}), goals.end());
+			}
+			if (walls.size() > 0)
+			{
+				walls.erase(
+						std::remove_if(walls.begin(), walls.end(),
+								[&aKeepObjects](WallPtr aWall)
+								{
+									return std::find( aKeepObjects.begin(),
+											aKeepObjects.end(),
+											aWall->getObjectId()) == aKeepObjects.end();
+								}), walls.end());
+			}
+
+			if (aNotifyObservers)
+			{
+				notifyObservers();
+			}
+		}
+		/**
+		 *
+		 */
+		std::string RobotWorld::asString() const
+		{
+			return ModelObject::asString();
+		}
+		/*
+		 *
+		 */
+		std::string RobotWorld::asCopyString() const
+		{
+			std::ostringstream os;
+
+			for (RobotPtr ptr : robots)
+			{
+				os << Robot << " " << ptr->asCopyString() << '\n';
+			}
+			for (WayPointPtr ptr : wayPoints)
+			{
+				os << WayPoint << " " << ptr->asCopyString() << '\n';
+			}
+			for (GoalPtr ptr : goals)
+			{
+				os << Goal << " " << ptr->asCopyString() << '\n';
+			}
+			for (WallPtr ptr : walls)
+			{
+				os << Wall << " " << ptr->asCopyString() << '\n';
+			}
+
+			return os.str();
+		}
+		/**
+		 *
+		 */
+		std::string RobotWorld::asDebugString() const
+		{
+			std::ostringstream os;
+
+			os << asString() << '\n';
+
+			for (RobotPtr ptr : robots)
+			{
+				os << ptr->asDebugString() << '\n';
+			}
+			for (WayPointPtr ptr : wayPoints)
+			{
+				os << ptr->asDebugString() << '\n';
+			}
+			for (GoalPtr ptr : goals)
+			{
+				os << ptr->asDebugString() << '\n';
+			}
+			for (WallPtr ptr : walls)
+			{
+				os << ptr->asDebugString() << '\n';
+			}
+
+			return os.str();
+		}
+		/**
+		 *
+		 */
+		RobotWorld::RobotWorld() :
+				communicating(false), robotWorldPtr(this)
+		{
+		}
+		/**
+		 *
+		 */
+		RobotWorld::~RobotWorld()
+		{
+			// No notification while I am in the destruction mode!
+			disableNotification();
+			unpopulate();
+		}
+		/**
+		 *
+		 */
+		void Model::RobotWorld::startCommunicating()
+		{
+			if (!communicating)
+			{
+				communicating = true;
+
+				std::string localPort = "12345";
+				if (Application::MainApplication::isArgGiven("-local_port"))
+				{
+					localPort = Application::MainApplication::getArg(
+							"-local_port").value;
+				}
+
+				Messaging::CommunicationService::getCommunicationService().runRequestHandler(
+						toPtr<RobotWorld>(), std::stoi(localPort));
+				Application::Logger::log("Started listening for world");
+
+			}
+		}
+
+		void Model::RobotWorld::stopCommunicating()
+		{
+			if (communicating)
+			{
+				communicating = false;
+
+				std::string localPort = "12345";
+				if (Application::MainApplication::isArgGiven("-local_port"))
+				{
+					localPort = Application::MainApplication::getArg(
+							"-local_port").value;
+				}
+
+				Messaging::Client c1ient("localhost", localPort,
+						toPtr<RobotWorld>());
+				Messaging::Message message(1, "stop");
+				c1ient.dispatchMessage(message);
+				Application::Logger::log("Stopped listening for world");
+			}
+		}
+
+		void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
+		{
+			switch (aMessage.getMessageType())
+			{
+			case CopyWorldRequest:
+			{
+				Application::Logger::log(
+						__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
+								+ aMessage.getBody());
+				//Read string and create objects.
+				std::string myString = aMessage.getBody();
+				aMessage.setMessageType(CopyWorldResponse);
+				aMessage.setBody(this->asCopyString());
+				fillWorld(myString);
+			}
+				break;
+			case SyncWorldRequest:
+			{
+				Application::Logger::log(
+						__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
+								+ aMessage.getBody());
+				aMessage.setMessageType(SyncWorldResponse);
+				aMessage.setBody("SyncResponse" + aMessage.asString());
+				break;
+			}
+			}
+		}
+		/**
+		 *
+		 */
+		void Model::RobotWorld::handleResponse(
+				const Messaging::Message& aMessage)
+		{
+			switch (aMessage.getMessageType())
+			{
+			case CopyWorldResponse:
+			{
+				Application::Logger::log(
+						__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
+								+ aMessage.getBody());
+				//Read string and create objects.
+				std::string myString = aMessage.getBody();
+				fillWorld(myString);
+				break;
+			}
+			case SyncWorldResponse:
+			{
+				Application::Logger::log(
+
+						__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+								+ aMessage.getBody());
+				break;
+			}
+			default:
+			{
+				Application::Logger::log(
+						__PRETTY_FUNCTION__
+								+ std::string(": Unknown response type")
+								+ aMessage.getBody());
+				break;
+			}
+			}
+		}
+		/**
+		 *
+		 */
+		void Model::RobotWorld::fillWorld(std::string& messageBody)
+		{
+			Application::Logger::log(
+					__PRETTY_FUNCTION__ + std::string(": InputWorld")
+							+ messageBody);
+			std::vector < std::string > lines;
+			boost::split(lines, messageBody, boost::is_any_of("\n"));
+
+			for (std::string line : lines)
+			{
+				if (!line.empty())
+				{
+					std::stringstream ss;
+					std::string aNewName;
+					unsigned long aNewX;
+					unsigned long aNewY;
+					unsigned long aNewSecondX;
+					unsigned long aNewSecondY;
+
+					switch (std::stoi(&line.at(0)))
+					{
+					case Robot:
+						line.erase(line.begin());
+						ss << line;
+						ss >> aNewName >> aNewX >> aNewY;
+						newRobot(("Robot"), Point(aNewX, aNewY));
+						break;
+					case WayPoint:
+						line.erase(line.begin());
+						ss << line;
+						ss >> aNewName >> aNewX >> aNewY;
+						newWayPoint(aNewName, Point(aNewX, aNewY), false);
+						break;
+					case Goal:
+						line.erase(line.begin());
+						ss << line;
+						ss >> aNewName >> aNewX >> aNewY;
+						newGoal(aNewName, Point(aNewX, aNewY), false);
+						break;
+					case Wall:
+						line.erase(line.begin());
+						ss << line;
+						ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
+						newWall(Point(aNewX, aNewY),
+								Point(aNewSecondX, aNewSecondY), false);
+						break;
+					default:
+						Application::Logger::log("Unknown object");
+						Application::Logger::log(line);
+						break;
+					}
+				}
+			}
+			Application::Logger::log("Copied world");
+			notifyObservers();
+		}
+
+	} // namespace Model
