@@ -187,7 +187,7 @@ public:
 
 	enum MessageType
 	{
-		EchoRequest, EchoResponse, SyncWorldRequest, SyncWorldResponse, CopyWorldRequest, CopyWorldResponse
+		EchoRequest, EchoResponse, SyncWorldRequest, SyncWorldResponse, CopyWorldRequest, CopyWorldResponse, StartRequest, StartResponse
 	};
 
 	enum copyType

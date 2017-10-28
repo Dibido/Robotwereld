@@ -349,7 +349,7 @@ void MainFrameWindow::OnStartRobot(CommandEvent& UNUSEDPARAM(anEvent))
 
 			//We are sending the message to start the other robot.
 			Messaging::Client c1ient(remoteIpAdres, remotePort, robot);
-			Messaging::Message message(Model::Robot::MessageType::StartRequest,
+			Messaging::Message message(Model::RobotWorld::MessageType::StartRequest,
 					"StartRequest");
 			c1ient.dispatchMessage(message);
 		}

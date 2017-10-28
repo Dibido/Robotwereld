@@ -255,9 +255,7 @@ namespace Model
 				EchoRequest,
 				EchoResponse,
 				SyncRequest,
-				SyncResponse,
-				StartRequest,
-				StartResponse
+				SyncResponse
 			};
 
 		protected:
