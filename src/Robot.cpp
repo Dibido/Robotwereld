@@ -84,7 +84,7 @@ void Robot::setGoal(std::string aGoal)
 {
 	goal = RobotWorld::getRobotWorld().getGoal(aGoal);
 }
-	
+
 void Robot::setWayPoint(std::string aWayPoint)
 {
 	waypoint = RobotWorld::getRobotWorld().getWayPoint(aWayPoint);
@@ -183,11 +183,11 @@ void Robot::startDriving()
 	driving = true;
 
 	//goal = RobotWorld::getRobotWorld().getGoal( "Goal");
-		
+
 	calculateRoute(waypoint);
 	drive(waypoint);
 
-	calculateRoute(goal);		
+	calculateRoute(goal);
 	drive(goal);
 }
 /**
@@ -367,25 +367,12 @@ void Robot::handleRequest(Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
 	{
-
-	case SyncRequest:
-	{
-		//TODO: handle sync request
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": SyncRequest"));
-		aMessage.setMessageType(SyncResponse);
-		aMessage.setBody("SyncResponse" + aMessage.asString());
-		//TODO: send all the items that are populated in the view.
-		break;
-	}
 	case EchoRequest:
 	{
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
 		aMessage.setMessageType(EchoResponse);
 		aMessage.setBody(": case 1 " + aMessage.asString());
-		break;
-	}
 		break;
 	}
 	default:
@@ -405,12 +392,6 @@ void Robot::handleResponse(const Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
 	{
-	case SyncResponse:
-		//TODO: handle response to sync request.
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": SyncResponse")
-						+ aMessage.asString());
-		break;
 	case EchoResponse:
 	{
 		Application::Logger::log(
@@ -548,7 +529,7 @@ void Robot::calculateRoute(WayPointPtr aGoal)
  */
 bool Robot::arrived(WayPointPtr aGoal)
 {
-	if (aGoal && intersects( aGoal->getRegion()))
+	if (aGoal && intersects(aGoal->getRegion()))
 	{
 		return true;
 	}

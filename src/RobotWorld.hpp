@@ -185,9 +185,22 @@ public:
 	 */
 	void stopCommunicating();
 
+//	bool isSyncing() const
+//	{
+//		return syncing;
+//	}
+//	void startSyncing();
+//	void stopSyncing();
+
 	enum MessageType
 	{
-		EchoRequest, EchoResponse, SyncWorldRequest, SyncWorldResponse, CopyWorldRequest, CopyWorldResponse, StartRequest, StartResponse
+		EchoRequest,
+		EchoResponse,
+		SyncWorlds,
+		CopyWorldRequest,
+		CopyWorldResponse,
+		StartRequest,
+		StartResponse
 	};
 
 	enum copyType
@@ -204,7 +217,10 @@ public:
 	 * Function that fills the world based on a string.
 	 */
 	void fillWorld(std::string& messageBody);
-
+	/**
+	 * Function that syncs the world based on a string.
+	 */
+	void syncWorld(std::string& messageBody);
 	/**
 	 *
 	 */

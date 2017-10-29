@@ -545,6 +545,15 @@ void Model::RobotWorld::stopCommunicating()
 	}
 }
 
+//void Model::RobotWorld::startSyncing()
+//{
+//	syncing = true;
+//}
+//void Model::RobotWorld::stopSyncing()
+//{
+//	syncing = false;
+//}
+
 void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
@@ -559,15 +568,17 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 		aMessage.setMessageType(CopyWorldResponse);
 		aMessage.setBody(this->asCopyString());
 		fillWorld(myString);
-	}
 		break;
-	case SyncWorldRequest:
+	}
+	case SyncWorlds:
 	{
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
 						+ aMessage.getBody());
-		aMessage.setMessageType(SyncWorldResponse);
-		aMessage.setBody("SyncResponse" + aMessage.asString());
+		std::string myString = aMessage.getBody();
+		syncWorld(myString);
+		aMessage.setMessageType(SyncWorlds);
+		aMessage.setBody(asCopyString());
 		break;
 	}
 	case StartRequest:
@@ -612,11 +623,13 @@ void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage)
 		fillWorld(myString);
 		break;
 	}
-	case SyncWorldResponse:
+	case SyncWorlds:
 	{
 		Application::Logger::log(
-
-		__PRETTY_FUNCTION__ + std::string(": SyncWorlds") + aMessage.getBody());
+				__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+						+ aMessage.getBody());
+		std::string myString = aMessage.getBody();
+		syncWorld(myString);
 		break;
 	}
 	case StartResponse:
@@ -690,6 +703,85 @@ void Model::RobotWorld::fillWorld(std::string& messageBody)
 	}
 	Application::Logger::log("Copied world");
 	notifyObservers();
+}
+
+void Model::RobotWorld::syncWorld(std::string& messageBody)
+{
+	Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": SyncWorld") + messageBody);
+	std::vector < std::string > lines;
+	boost::split(lines, messageBody, boost::is_any_of("\n"));
+
+	unsigned long waypointID = 0;
+	unsigned long goalID = 0;
+	unsigned long wallID = 0;
+
+	for (std::string line : lines)
+	{
+		if (!line.empty())
+		{
+			std::stringstream ss;
+			std::string aNewName;
+			unsigned long aNewX;
+			unsigned long aNewY;
+			signed long aNewLookX;
+			signed long aNewLookY;
+			unsigned long aNewSecondX;
+			unsigned long aNewSecondY;
+
+			RobotPtr robot;
+
+			switch (std::stoi(&line.at(0)))
+			{
+			case Robot:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY >> aNewLookX >> aNewLookY;
+				robot = getRobot(aNewName);
+				if (robot)
+				{
+					Application::Logger::log(robot->asString());
+					robot->setPosition(Point(aNewX, aNewY), true);
+					robot->setFront(BoundedVector(aNewLookX, aNewLookY), true);
+				}
+				break;
+			case WayPoint:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				getWayPoint(aNewName)->setPosition(Point(aNewX, aNewY), false);
+				getWayPoint(aNewName)->notifyObservers();
+				++waypointID;
+				break;
+			case Goal:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				getGoals().at(goalID)->setPosition(Point(aNewX, aNewY), false);
+				getGoals().at(goalID)->notifyObservers();
+				++goalID;
+				break;
+			case Wall:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
+				if (getWalls().at(wallID))
+				{
+					getWalls().at(wallID)->setPoint1(Point(aNewX, aNewY),
+							false);
+					getWalls().at(wallID)->setPoint2(
+							Point(aNewSecondX, aNewSecondY), false);
+					getWalls().at(wallID)->notifyObservers();
+				}
+				++wallID;
+				break;
+			default:
+				Application::Logger::log("Unknown object");
+				Application::Logger::log(line);
+				break;
+			}
+		}
+	}
 }
 
 } // namespace Model

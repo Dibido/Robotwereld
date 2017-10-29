@@ -349,7 +349,8 @@ void MainFrameWindow::OnStartRobot(CommandEvent& UNUSEDPARAM(anEvent))
 
 			//We are sending the message to start the other robot.
 			Messaging::Client c1ient(remoteIpAdres, remotePort, robot);
-			Messaging::Message message(Model::RobotWorld::MessageType::StartRequest,
+			Messaging::Message message(
+					Model::RobotWorld::MessageType::StartRequest,
 					"StartRequest");
 			c1ient.dispatchMessage(message);
 		}
@@ -482,11 +483,9 @@ void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
 		{
 			remotePort = MainApplication::getArg("-remote_port").value;
 		}
-		//Requests to sync the worlds.
 		Messaging::Client client(remoteIpAdres, remotePort, worldptr);
-		Messaging::Message message(
-				Model::RobotWorld::MessageType::SyncWorldRequest,
-				"Request Sync.");
+		Messaging::Message message(Model::RobotWorld::MessageType::SyncWorlds,
+				Model::RobotWorld::getRobotWorld().asCopyString());
 		client.dispatchMessage(message);
 	}
 }

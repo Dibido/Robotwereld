@@ -253,9 +253,7 @@ namespace Model
 			enum MessageType
 			{
 				EchoRequest,
-				EchoResponse,
-				SyncRequest,
-				SyncResponse
+				EchoResponse
 			};
 
 		protected:
