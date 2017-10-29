@@ -1,5 +1,8 @@
 #include <AStar.hpp>
+#include "MainApplication.hpp"
+#include "Logger.hpp"
 #include <RobotWorld.hpp>
+#include "Robot.hpp"
 #include <Shape2DUtils.hpp>
 #include <Wall.hpp>
 #include <algorithm>
@@ -8,6 +11,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <utility>
+#include <iostream>
 
 namespace PathAlgorithm
 {
@@ -72,16 +76,26 @@ namespace PathAlgorithm
 					break;
 				}
 			}
-			/*
-			for (Model::RobotPtr robot : robots)
+			
+			for (std::size_t j = 1; j < robots.size(); ++j)
 			{
-				if (Utils::Shape2DUtils::isOnLine( wall->getPoint1(), wall->getPoint2(), vertex.asPoint(), aFreeRadius))
-				{
-					addToNeigbours = false;
-					break;
-				}
+					if
+					(
+						Utils::Shape2DUtils::isOnLine( robots[j]->getFrontLeft(), robots[j]->getFrontRight(), vertex.asPoint(), aFreeRadius)
+						||
+						Utils::Shape2DUtils::isOnLine( robots[j]->getFrontRight(), robots[j]->getBackRight(), vertex.asPoint(), aFreeRadius)
+						||
+						Utils::Shape2DUtils::isOnLine( robots[j]->getBackRight(), robots[j]->getBackLeft(), vertex.asPoint(), aFreeRadius)
+						||
+						Utils::Shape2DUtils::isOnLine( robots[j]->getBackLeft(), robots[j]->getFrontLeft(), vertex.asPoint(), aFreeRadius)
+					)
+					{
+						addToNeigbours = false;
+						break;
+					}
 			}
-			*/
+				
+			
 			if (addToNeigbours == true)
 			{
 				neighbours.push_back( vertex);
