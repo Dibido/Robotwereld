@@ -673,7 +673,7 @@ void Model::RobotWorld::fillWorld(std::string& messageBody)
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewName >> aNewX >> aNewY;
-				newRobot(("Robot"), Point(aNewX, aNewY));
+				newRobot(("Bobot"), Point(aNewX, aNewY));
 				break;
 			case WayPoint:
 				line.erase(line.begin());
