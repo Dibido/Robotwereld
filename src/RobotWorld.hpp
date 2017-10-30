@@ -197,6 +197,7 @@ public:
 		EchoRequest,
 		EchoResponse,
 		SyncWorlds,
+		CopyRobots,
 		CopyWorldRequest,
 		CopyWorldResponse,
 		StartRequest,

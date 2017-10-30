@@ -299,12 +299,12 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 				== "instance1")
 		{
 			RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
-			RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
-					false);
+//			RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
+//					false);
 			RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
 			RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
-			RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
-					"WayPoint");
+//			RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
+//					"WayPoint");
 			static Point coordinates[] =
 					{ Point(100, 400), Point(350, 300), Point(300, 100), Point(
 							350, 200) };
@@ -332,8 +332,8 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 		RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
 		//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
 
-		RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
-				false);
+//		RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
+//				false);
 
 		RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
 		//RobotWorld::getRobotWorld().newRobot( "Robot2", Point( 150, 150),false);
@@ -341,7 +341,7 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 		RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
 		//RobotWorld::getRobotWorld().getRobot( "Robot2")->setGoal("Goal2");
 
-		RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint("WayPoint");
+//		RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint("WayPoint");
 
 		static Point coordinates[] =
 		{ Point(100, 400), Point(350, 300), Point(300, 100), Point(350, 200) };
@@ -545,15 +545,6 @@ void Model::RobotWorld::stopCommunicating()
 	}
 }
 
-//void Model::RobotWorld::startSyncing()
-//{
-//	syncing = true;
-//}
-//void Model::RobotWorld::stopSyncing()
-//{
-//	syncing = false;
-//}
-
 void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 {
 	switch (aMessage.getMessageType())
@@ -570,6 +561,34 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 		fillWorld(myString);
 		break;
 	}
+	case CopyRobots:
+	{
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": CopyRobots ")
+						+ aMessage.getBody());
+
+		std::stringstream ss;
+		ss << aMessage.getBody();
+
+		std::string aName;
+		unsigned long x;
+		unsigned long y;
+		unsigned long lx;
+		unsigned long ly;
+
+		ss >> aName >> x >> y >> lx >> ly;
+
+		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
+				("Bobot"));
+		if (robot)
+		{
+
+			robot->setPosition(Point(x, y), true);
+			robot->setFront(BoundedVector(lx, ly), true);
+		};
+		break;
+	}
+
 	case SyncWorlds:
 	{
 		Application::Logger::log(

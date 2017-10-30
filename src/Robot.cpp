@@ -401,6 +401,39 @@ void Robot::handleResponse(const Messaging::Message& aMessage)
 
 		break;
 	}
+	case Model::RobotWorld::CopyRobots:
+	{
+		Application::Logger::log(
+						__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
+								+ aMessage.getBody());
+		std::stringstream ss;
+		ss << aMessage.getBody();
+
+		std::string aName;
+		unsigned long x;
+		unsigned long y;
+		unsigned long lx;
+		unsigned long ly;
+
+		ss >> aName >> x >> y >> lx >> ly;
+
+		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
+				("Robot"));
+
+		if (robot)
+		{
+			Application::Logger::log(robot->asString());
+			robot->setPosition(Point(x, y), true);
+			robot->setFront(BoundedVector(lx, ly), true);
+
+		}
+		else
+		{
+			Application::Logger::log("No robot has the name : " + aName);
+		}
+
+		break;
+	}
 	default:
 	{
 		Application::Logger::log(
@@ -483,9 +516,8 @@ void Robot::drive(WayPointPtr waypointArrived)
 			}
 
 			notifyObservers();
-
+			sendRobotPosition();
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
 			// this should be the last thing in the loop
 			if (driving == false)
 			{
@@ -559,6 +591,35 @@ bool Robot::collision()
 		}
 	}
 	return false;
+}
+
+void Robot::sendRobotPosition()
+{
+	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
+			"Robot");
+	if (robot)
+	{
+		std::string remoteIpAdres = "localhost";
+		std::string remotePort = "12345";
+
+		if (Application::MainApplication::isArgGiven("-remote_ip"))
+		{
+			remoteIpAdres =
+					Application::MainApplication::getArg("-remote_ip").value;
+		}
+		if (Application::MainApplication::isArgGiven("-remote_port"))
+		{
+			remotePort =
+					Application::MainApplication::getArg("-remote_port").value;
+		}
+
+		Messaging::Client client(remoteIpAdres, remotePort, robot);
+		Messaging::Message message(
+				Model::RobotWorld::MessageType::CopyRobots,
+				asCopyString());
+		Application::Logger::log(message.getBody());
+		client.dispatchMessage(message);
+	}
 }
 
 } // namespace Model
