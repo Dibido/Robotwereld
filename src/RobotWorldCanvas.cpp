@@ -1,4 +1,5 @@
 #include "RobotWorldCanvas.hpp"
+#include "MainApplication.hpp"
 #include "Logger.hpp"
 #include "RectangleShape.hpp"
 #include "LineShape.hpp"
@@ -13,6 +14,8 @@
 #include "RobotWorld.hpp"
 #include "NotificationEvent.hpp"
 #include <algorithm>
+#include "Client.hpp"
+#include "Message.hpp"
 
 namespace View
 {
@@ -624,6 +627,24 @@ namespace View
 		startActionShape = nullptr;
 		endActionShape = nullptr;
 		actionStatus = IDLE;
+
+		Model::RobotWorldPtr worldptr = Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+		if (worldptr) {
+			std::string remoteIpAdres = "localhost";
+			std::string remotePort = "12345";
+
+			if (Application::MainApplication::isArgGiven("-remote_ip")) {
+				remoteIpAdres = Application::MainApplication::getArg("-remote_ip").value;
+			}
+			if (Application::MainApplication::isArgGiven("-remote_port")) {
+				remotePort = Application::MainApplication::getArg("-remote_port").value;
+			}
+			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
+			Messaging::Message message(
+					Model::RobotWorld::MessageType::SyncWorlds,
+					Model::RobotWorld::getRobotWorld().asCopyString());
+			client.dispatchMessage(message);
+		}
 
 		Refresh();
 	}
