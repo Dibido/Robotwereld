@@ -82,6 +82,8 @@ namespace Application
 			LogTextCtrl* logTextCtrl;
 			Panel* buttonPanel;
 
+			bool copied = false;
+
 			Base::DebugTraceFunction* debugTraceFunction;
 
 			void OnQuit( CommandEvent& anEvent);
