@@ -93,6 +93,7 @@ namespace Base
 
 		private:
 			bool notify;
+			bool sync = false;
 			std::vector< Observer* > observers;
 
 	};
