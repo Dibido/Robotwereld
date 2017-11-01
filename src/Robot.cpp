@@ -515,6 +515,8 @@ void Robot::drive(WayPointPtr waypointArrived)
 				Application::Logger::log(
 						__PRETTY_FUNCTION__
 								+ std::string(": arrived or collision"));
+				//TODO
+				calculateRoute(goal);
 				notifyObservers();
 				break;
 			}

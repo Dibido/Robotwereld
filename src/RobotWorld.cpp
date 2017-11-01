@@ -301,12 +301,13 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 			RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
 //			RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
 //					false);
-			RobotWorld::getRobotWorld().newRobot("Robot", Point(50, 50), false);
+			RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 50),
+					false);
 			RobotWorld::getRobotWorld().getRobot("Robot")->setGoal("Goal");
 //			RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
 //					"WayPoint");
 			static Point coordinates[] =
-					{ Point(10, 200), Point(150, 200), Point(300, 200), Point(
+					{ Point(10, 200), Point(250, 200), Point(350, 200), Point(
 							500, 200) };
 			for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 			{
@@ -334,7 +335,7 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 	}
 	else
 	{
-		RobotWorld::getRobotWorld().newGoal("Goal", Point(450, 450), false);
+		RobotWorld::getRobotWorld().newGoal("Goal", Point(300, 450), false);
 		//RobotWorld::getRobotWorld().newGoal( "Goal2", Point( 350, 350),false);
 
 //		RobotWorld::getRobotWorld().newWayPoint("WayPoint", Point(350, 350),
