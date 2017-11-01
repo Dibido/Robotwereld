@@ -306,15 +306,12 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 //			RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
 //					"WayPoint");
 			static Point coordinates[] =
-					{ Point(100, 400), Point(350, 300), Point(300, 100), Point(
-							350, 200) };
+					{ Point(10, 200), Point(150, 200), Point(300, 200), Point(
+							500, 200) };
 			for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 			{
-				RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
-						"WayPoint");
-				static Point coordinates[] =
-				{ Point(100, 400), Point(350, 300), Point(300, 100), Point(350,
-						200) };
+//				RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
+//						"WayPoint");
 				for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 				{
 					RobotWorld::getRobotWorld().newWall(coordinates[i],
@@ -618,6 +615,13 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 		if (robot && !robot->isActing())
 		{
 			robot->startActing();
+		}
+		else
+		{
+			robot->getRobotThread().join();
+			std::thread newRobotThread([this, robot]
+			{	robot->startDriving();});
+			robot->getRobotThread().swap(newRobotThread);
 		}
 		aMessage.setMessageType(StartResponse);
 		if (robot->isDriving())

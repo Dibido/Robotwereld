@@ -208,6 +208,13 @@ public:
 		return path;
 	}
 	/**
+	 *
+	 */
+	inline std::thread& getRobotThread()
+	{
+		return robotThread;
+	}
+	/**
 	 * @name Messaging::MessageHandler functions
 	 */
 	//@{
@@ -287,9 +294,11 @@ private:
 	bool acting;
 	bool driving;
 	bool communicating;
+	bool calculatedRoute;
 
 	std::thread robotThread;
 	mutable std::recursive_mutex robotMutex;
 };
 } // namespace Model
+
 #endif // ROBOT_HPP_

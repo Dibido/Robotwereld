@@ -23,7 +23,7 @@ namespace Model
  */
 Robot::Robot() :
 		name(""), size( DefaultSize), position( DefaultPosition), front(0, 0), speed(
-				0.0), acting(false), driving(false), communicating(false)
+				0.0), acting(false), driving(false), communicating(false), calculatedRoute(false)
 {
 	std::shared_ptr<AbstractSensor> laserSensor(new LaserDistanceSensor(this));
 	attachSensor(laserSensor);
@@ -34,7 +34,7 @@ Robot::Robot() :
 Robot::Robot(const std::string& aName) :
 		name(aName), size( DefaultSize), position( DefaultPosition), front(0,
 				0), speed(0.0), acting(false), driving(false), communicating(
-				false)
+				false), calculatedRoute(false)
 {
 	std::shared_ptr<AbstractSensor> laserSensor(new LaserDistanceSensor(this));
 	attachSensor(laserSensor);
@@ -44,7 +44,7 @@ Robot::Robot(const std::string& aName) :
  */
 Robot::Robot(const std::string& aName, const Point& aPosition) :
 		name(aName), size( DefaultSize), position(aPosition), front(0, 0), speed(
-				0.0), acting(false), driving(false), communicating(false)
+				0.0), acting(false), driving(false), communicating(false), calculatedRoute(false)
 {
 	std::shared_ptr<AbstractSensor> laserSensor(new LaserDistanceSensor(this));
 	attachSensor(laserSensor);
@@ -180,15 +180,19 @@ void Robot::stopActing()
  */
 void Robot::startDriving()
 {
-	driving = true;
-
-	//goal = RobotWorld::getRobotWorld().getGoal( "Goal");
-
-	calculateRoute(waypoint);
-	drive(waypoint);
-
-	calculateRoute(goal);
-	drive(goal);
+	if (calculatedRoute == false)
+	{
+//		calculateRoute(waypoint);
+		calculateRoute(goal);
+		calculatedRoute = true;
+		return;
+	}
+	else
+	{
+		driving = true;
+//		drive(waypoint);
+		drive(goal);
+	}
 }
 /**
  *
@@ -514,7 +518,6 @@ void Robot::drive(WayPointPtr waypointArrived)
 				notifyObservers();
 				break;
 			}
-
 			notifyObservers();
 			sendRobotPosition();
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));

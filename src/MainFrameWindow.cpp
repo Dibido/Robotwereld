@@ -15,13 +15,15 @@
 #include "Client.hpp"
 #include "Message.hpp"
 
-namespace Application {
+namespace Application
+{
 /**
  * IDs for the controls and the menu commands
  * If there are (default) wxWidget ID's: try to maintain
  * compatibility, especially wxID_ABOUT because on a Mac it is special
  */
-enum {
+enum
+{
 	ID_QUIT = wxID_EXIT,         	//!< ID_QUIT
 	ID_OPTIONS = wxID_PROPERTIES,		//!< ID_OPTIONS
 	ID_ABOUT = wxID_ABOUT,        	//!< ID_ABOUT
@@ -37,22 +39,27 @@ MainFrameWindow::MainFrameWindow(const std::string& aTitle) :
 				Size(500, 400)), clientPanel(nullptr), menuBar(nullptr), splitterWindow(
 				nullptr), lhsPanel(nullptr), robotWorldCanvas(nullptr), rhsPanel(
 				nullptr), logTextCtrl(nullptr), buttonPanel(nullptr), debugTraceFunction(
-				nullptr) {
+				nullptr)
+{
 	initialise();
 }
 /**
  *
  */
-MainFrameWindow::~MainFrameWindow() {
-	if (debugTraceFunction) {
+MainFrameWindow::~MainFrameWindow()
+{
+	if (debugTraceFunction)
+	{
 		delete debugTraceFunction;
 	}
 }
 /**
  *
  */
-Base::DebugTraceFunction& MainFrameWindow::getTraceFunction() const {
-	if (debugTraceFunction) {
+Base::DebugTraceFunction& MainFrameWindow::getTraceFunction() const
+{
+	if (debugTraceFunction)
+	{
 		return *debugTraceFunction;
 	}
 	throw std::runtime_error(
@@ -61,7 +68,8 @@ Base::DebugTraceFunction& MainFrameWindow::getTraceFunction() const {
 /**
  *
  */
-void MainFrameWindow::initialise() {
+void MainFrameWindow::initialise()
+{
 	SetMenuBar(initialiseMenuBar());
 
 	GridBagSizer* sizer = new GridBagSizer(5, 5);
@@ -94,7 +102,8 @@ void MainFrameWindow::initialise() {
 /**
  *
  */
-MenuBar* MainFrameWindow::initialiseMenuBar() {
+MenuBar* MainFrameWindow::initialiseMenuBar()
+{
 	Menu* fileMenu = new Menu;
 	fileMenu->Append(ID_QUIT, WXSTRING("E&xit\tAlt-X"),
 			WXSTRING("Exit the application"));
@@ -119,8 +128,10 @@ MenuBar* MainFrameWindow::initialiseMenuBar() {
 /**
  *
  */
-Panel* MainFrameWindow::initialiseClientPanel() {
-	if (!clientPanel) {
+Panel* MainFrameWindow::initialiseClientPanel()
+{
+	if (!clientPanel)
+	{
 		clientPanel = new Panel(this, DEFAULT_ID);
 
 		GridBagSizer* sizer = new GridBagSizer();
@@ -142,8 +153,10 @@ Panel* MainFrameWindow::initialiseClientPanel() {
 /**
  *
  */
-SplitterWindow* MainFrameWindow::initialiseSplitterWindow() {
-	if (!splitterWindow) {
+SplitterWindow* MainFrameWindow::initialiseSplitterWindow()
+{
+	if (!splitterWindow)
+	{
 		GridBagSizer* sizer = new GridBagSizer();
 
 		splitterWindow = new SplitterWindow(clientPanel, DEFAULT_ID);
@@ -168,8 +181,10 @@ SplitterWindow* MainFrameWindow::initialiseSplitterWindow() {
 /**
  *
  */
-Panel* MainFrameWindow::initialiseLhsPanel() {
-	if (!lhsPanel) {
+Panel* MainFrameWindow::initialiseLhsPanel()
+{
+	if (!lhsPanel)
+	{
 		lhsPanel = new Panel(splitterWindow, DEFAULT_ID);
 
 		GridBagSizer* sizer = new GridBagSizer();
@@ -190,8 +205,10 @@ Panel* MainFrameWindow::initialiseLhsPanel() {
 /**
  *
  */
-Panel* MainFrameWindow::initialiseRhsPanel() {
-	if (!rhsPanel) {
+Panel* MainFrameWindow::initialiseRhsPanel()
+{
+	if (!rhsPanel)
+	{
 		rhsPanel = new Panel(splitterWindow, DEFAULT_ID);
 
 		GridBagSizer* sizer = new GridBagSizer();
@@ -219,7 +236,8 @@ Panel* MainFrameWindow::initialiseRhsPanel() {
 /**
  *
  */
-Panel* MainFrameWindow::initialiseButtonPanel() {
+Panel* MainFrameWindow::initialiseButtonPanel()
+{
 	Panel* panel = new Panel(rhsPanel);
 
 	GridBagSizer* sizer = new GridBagSizer();
@@ -264,14 +282,16 @@ Panel* MainFrameWindow::initialiseButtonPanel() {
 /**
  *
  */
-void MainFrameWindow::OnQuit(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnQuit(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Close(true);
 }
 /**
  *
  */
 void MainFrameWindow::OnWidgetDebugTraceFunction(
-		CommandEvent& UNUSEDPARAM(anEvent)) {
+		CommandEvent& UNUSEDPARAM(anEvent))
+{
 	if (debugTraceFunction)
 		delete debugTraceFunction;
 	debugTraceFunction = new WidgetDebugTraceFunction(logTextCtrl);
@@ -280,7 +300,8 @@ void MainFrameWindow::OnWidgetDebugTraceFunction(
  *
  */
 void MainFrameWindow::OnStdOutDebugTraceFunction(
-		CommandEvent& UNUSEDPARAM(anEvent)) {
+		CommandEvent& UNUSEDPARAM(anEvent))
+{
 	if (debugTraceFunction)
 		delete debugTraceFunction;
 	debugTraceFunction = new Base::StdOutDebugTraceFunction();
@@ -290,32 +311,46 @@ void MainFrameWindow::OnStdOutDebugTraceFunction(
 /**
  *
  */
-void MainFrameWindow::OnAbout(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnAbout(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	wxMessageBox(WXSTRING("OOSE 2016 RobotWorld.\n"),
 			WXSTRING("About RobotWorld"), wxOK | wxICON_INFORMATION, this);
 }
 /**
  *
  */
-void MainFrameWindow::OnStartRobot(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnStartRobot(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Logger::log("Attempting to start our Robot");
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
 			"Robot");
-	if (robot && !robot->isActing()) {
+	if (robot && !robot->isActing())
+	{
 		robot->startActing();
+	}
+	else
+	{
+		robot->getRobotThread().join();
+		std::thread newRobotThread([this, robot]
+		{	robot->startDriving();});
+		robot->getRobotThread().swap(newRobotThread);
 	}
 	Model::RobotWorldPtr worldptr =
 			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-	if (worldptr) {
-		if (worldptr->isCommunicating()) {
+	if (worldptr)
+	{
+		if (worldptr->isCommunicating())
+		{
 			Logger::log("Attempting to start the other Robot");
 			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
-			if (MainApplication::isArgGiven("-remote_ip")) {
+			if (MainApplication::isArgGiven("-remote_ip"))
+			{
 				remoteIpAdres = MainApplication::getArg("-remote_ip").value;
 			}
-			if (MainApplication::isArgGiven("-remote_port")) {
+			if (MainApplication::isArgGiven("-remote_port"))
+			{
 				remotePort = MainApplication::getArg("-remote_port").value;
 			}
 
@@ -332,33 +367,39 @@ void MainFrameWindow::OnStartRobot(CommandEvent& UNUSEDPARAM(anEvent)) {
 /**
  *
  */
-void MainFrameWindow::OnStopRobot(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnStopRobot(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Logger::log("Attempting to stop Robot...");
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
 			"Robot");
-	if (robot && robot->isActing()) {
+	if (robot && robot->isActing())
+	{
 		robot->stopActing();
 	}
 }
 /**
  *
  */
-void MainFrameWindow::OnPopulate(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnPopulate(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	robotWorldCanvas->populate(2);
 }
 /**
  *
  */
-void MainFrameWindow::OnUnpopulate(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnUnpopulate(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	robotWorldCanvas->unpopulate();
 }
 /**
  *
  */
-void MainFrameWindow::OnStartListening(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnStartListening(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
 			"Robot");
-	if (robot) {
+	if (robot)
+	{
 		robot->startCommunicating();
 	}
 
@@ -366,17 +407,21 @@ void MainFrameWindow::OnStartListening(CommandEvent& UNUSEDPARAM(anEvent)) {
 /**
  *
  */
-void MainFrameWindow::OnSendMessage(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnSendMessage(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
 			"Robot");
-	if (robot) {
+	if (robot)
+	{
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
 
-		if (MainApplication::isArgGiven("-remote_ip")) {
+		if (MainApplication::isArgGiven("-remote_ip"))
+		{
 			remoteIpAdres = MainApplication::getArg("-remote_ip").value;
 		}
-		if (MainApplication::isArgGiven("-remote_port")) {
+		if (MainApplication::isArgGiven("-remote_port"))
+		{
 			remotePort = MainApplication::getArg("-remote_port").value;
 		}
 
@@ -391,28 +436,35 @@ void MainFrameWindow::OnSendMessage(CommandEvent& UNUSEDPARAM(anEvent)) {
 /**
  *
  */
-void MainFrameWindow::OnStopListening(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnStopListening(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Model::RobotPtr thijs = Model::RobotWorld::getRobotWorld().getRobot(
 			"Robot");
-	if (thijs) {
+	if (thijs)
+	{
 		thijs->stopCommunicating();
 	}
 }
 
-void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
-	if (!copied) {
+void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
+	if (!copied)
+	{
 		copied = true;
 
 		Model::RobotWorldPtr worldptr =
 				Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-		if (worldptr) {
+		if (worldptr)
+		{
 			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
-			if (MainApplication::isArgGiven("-remote_ip")) {
+			if (MainApplication::isArgGiven("-remote_ip"))
+			{
 				remoteIpAdres = MainApplication::getArg("-remote_ip").value;
 			}
-			if (MainApplication::isArgGiven("-remote_port")) {
+			if (MainApplication::isArgGiven("-remote_port"))
+			{
 				remotePort = MainApplication::getArg("-remote_port").value;
 			}
 			//Requests to sync the worlds.
@@ -427,20 +479,25 @@ void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
 /**
  * TODO: Implement syncing worlds between instances.
  */
-void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
-	if (!copied) {
+void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
+	if (!copied)
+	{
 		copied = true;
 
 		Model::RobotWorldPtr worldptr =
 				Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-		if (worldptr) {
+		if (worldptr)
+		{
 			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
-			if (MainApplication::isArgGiven("-remote_ip")) {
+			if (MainApplication::isArgGiven("-remote_ip"))
+			{
 				remoteIpAdres = MainApplication::getArg("-remote_ip").value;
 			}
-			if (MainApplication::isArgGiven("-remote_port")) {
+			if (MainApplication::isArgGiven("-remote_port"))
+			{
 				remotePort = MainApplication::getArg("-remote_port").value;
 			}
 			//Requests to sync the worlds.
@@ -450,17 +507,22 @@ void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
 					Model::RobotWorld::getRobotWorld().asCopyString());
 			client.dispatchMessage(message);
 		}
-	} else {
+	}
+	else
+	{
 		Model::RobotWorldPtr worldptr =
 				Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-		if (worldptr) {
+		if (worldptr)
+		{
 			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
-			if (MainApplication::isArgGiven("-remote_ip")) {
+			if (MainApplication::isArgGiven("-remote_ip"))
+			{
 				remoteIpAdres = MainApplication::getArg("-remote_ip").value;
 			}
-			if (MainApplication::isArgGiven("-remote_port")) {
+			if (MainApplication::isArgGiven("-remote_port"))
+			{
 				remotePort = MainApplication::getArg("-remote_port").value;
 			}
 			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
@@ -473,18 +535,22 @@ void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
 
 }
 
-void MainFrameWindow::OnListenWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnListenWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Model::RobotWorldPtr worldptr =
 			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-	if (worldptr) {
+	if (worldptr)
+	{
 		worldptr->startCommunicating();
 	}
 }
 
-void MainFrameWindow::OnStopListenWorld(CommandEvent& UNUSEDPARAM(anEvent)) {
+void MainFrameWindow::OnStopListenWorld(CommandEvent& UNUSEDPARAM(anEvent))
+{
 	Model::RobotWorldPtr worldptr =
 			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-	if (worldptr) {
+	if (worldptr)
+	{
 		worldptr->stopCommunicating();
 	}
 }
