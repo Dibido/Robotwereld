@@ -689,12 +689,13 @@ void Model::RobotWorld::syncWorld(std::string& messageBody) {
 			case Robot:
 				line.erase(line.begin());
 				ss << line;
-				ss >> aNewName >> aNewX >> aNewY >> aNewLookX >> aNewLookY;
+				ss >> aNewName >> aNewX >> aNewY;
 				robot = getRobot(aNewName);
 				if (robot) {
 					Application::Logger::log(robot->asString());
 					robot->setPosition(Point(aNewX, aNewY), true);
 					robot->setFront(BoundedVector(aNewLookX, aNewLookY), true);
+					robot->notifyObservers();
 				}
 				break;
 			case WayPoint:
@@ -720,8 +721,10 @@ void Model::RobotWorld::syncWorld(std::string& messageBody) {
 				ss << line;
 				ss >> aNewName >> aNewX >> aNewY;
 				getGoal(aNewName)->setPosition(Point(aNewX, aNewY), false);
+				getGoal(aNewName)->notifyObservers();
 				break;
 			case Wall:
+
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
@@ -733,6 +736,13 @@ void Model::RobotWorld::syncWorld(std::string& messageBody) {
 					getWalls().at(wallID)->notifyObservers();
 				}
 				++wallID;
+				/*
+				 line.erase(line.begin());
+				 ss << line;
+				 ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
+				 newWall(Point(aNewX, aNewY), Point(aNewSecondX, aNewSecondY),
+				 false);
+				 */
 				break;
 			default:
 				Application::Logger::log("Unknown object");

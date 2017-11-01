@@ -165,8 +165,10 @@ void Robot::startDriving() {
 			return;
 		} else {
 			driving = true;
+			calculatedRoute = false;
 			//		drive(waypoint);
 			//calculatedRoute = false;
+
 			if (Model::RobotWorld::getRobotWorld().isChanged()) {
 
 				Model::RobotWorld::getRobotWorld().unsetChanged();
@@ -366,8 +368,11 @@ void Robot::handleRequest(Messaging::Message& aMessage) {
 
 		ss >> aName >> x >> y >> lx >> ly;
 
-		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
-				(std::string(Application::MainApplication::getArg("-worldname").value)));
+		Model::RobotPtr robot =
+				Model::RobotWorld::getRobotWorld().getRobot(
+						(std::string(
+								Application::MainApplication::getArg(
+										"-worldname").value)));
 
 		if (robot) {
 			Application::Logger::log(robot->asString());
@@ -486,6 +491,7 @@ void Robot::drive(WayPointPtr waypointArrived) {
 				//TODO
 				//calculateRoute(goal);
 				notifyObservers();
+				driving = false;
 				break;
 			}
 
@@ -515,29 +521,37 @@ void Robot::restartDriving() {
 	stopDriving();
 	calculateRoute(goal);
 	recalculatedNewPath = true;
-	startDriving();
+	driving = true;
+	drive(goal);
 }
 
 void Robot::calculateRoute(WayPointPtr aGoal) {
-	path.clear();
-	if (aGoal) {
-		// Turn off logging if not debugging AStar
-		Application::Logger::setDisable();
+	if (!arrived(goal)) {
+		path.clear();
+		if (aGoal) {
+			// Turn off logging if not debugging AStar
+			Application::Logger::setDisable();
 
-		front = BoundedVector(aGoal->getPosition(), position);
-		handleNotificationsFor(astar);
-		path = astar.search(position, aGoal->getPosition(), size);
-		stopHandlingNotificationsFor(astar);
+			front = BoundedVector(aGoal->getPosition(), position);
+			handleNotificationsFor(astar);
+			path = astar.search(position, aGoal->getPosition(), size);
+			stopHandlingNotificationsFor(astar);
 
-		Application::Logger::setDisable(false);
+			Application::Logger::setDisable(false);
+		}
 	}
 }
 /**
  *
  */
 bool Robot::arrived(WayPointPtr aGoal) {
-	if (aGoal && intersects(aGoal->getRegion())) {
-		return true;
+	if (aGoal) {
+		int distanceX = abs(position.x - aGoal->getPosition().x);
+		int distanceY = abs(position.y - aGoal->getPosition().y);
+
+		if (distanceX < 1 && distanceY < 1) {
+			return true;
+		}
 	}
 	return false;
 }
@@ -582,7 +596,9 @@ bool Robot::nearRobots() {
 }
 
 void Robot::sendRobotPosition() {
-	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(std::string(Application::MainApplication::getArg("-worldname").value));
+	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
+			std::string(
+					Application::MainApplication::getArg("-worldname").value));
 	if (robot) {
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
