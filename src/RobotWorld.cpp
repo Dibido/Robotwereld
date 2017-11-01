@@ -307,7 +307,7 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 //			RobotWorld::getRobotWorld().getRobot("Robot")->setWayPoint(
 //					"WayPoint");
 			static Point coordinates[] =
-					{ Point(10, 200), Point(250, 200), Point(350, 200), Point(
+					{ Point(10, 200), Point(150, 200), Point(250, 200), Point(
 							500, 200) };
 			for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 			{
