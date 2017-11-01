@@ -585,7 +585,7 @@ void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
 		ss >> aName >> x >> y >> lx >> ly;
 
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
-				("Bobot"));
+				"Bobot");
 		if (robot)
 		{
 
@@ -770,6 +770,14 @@ void Model::RobotWorld::syncWorld(std::string& messageBody)
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewName >> aNewX >> aNewY >> aNewLookX >> aNewLookY;
+				if (aNewName == "Robot")
+				{
+					aNewName = "Bobot";
+				}
+				else if (aNewName == "Bobot")
+				{
+					aNewName = "Robot";
+				}
 				robot = getRobot(aNewName);
 				if (robot)
 				{
@@ -799,6 +807,7 @@ void Model::RobotWorld::syncWorld(std::string& messageBody)
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
+
 				if (getWalls().at(wallID))
 				{
 					getWalls().at(wallID)->setPoint1(Point(aNewX, aNewY),

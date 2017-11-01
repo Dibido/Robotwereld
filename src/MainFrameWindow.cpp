@@ -477,7 +477,7 @@ void MainFrameWindow::OnCopyWorld(CommandEvent& UNUSEDPARAM(anEvent))
 	}
 }
 /**
- * TODO: Implement syncing worlds between instances.
+ *
  */
 void MainFrameWindow::OnSyncWorld(CommandEvent& UNUSEDPARAM(anEvent))
 {
