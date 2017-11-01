@@ -551,12 +551,9 @@ void Model::RobotWorld::stopCommunicating()
 	}
 }
 
-void Model::RobotWorld::handleRequest(Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case CopyWorldRequest:
-	{
+void Model::RobotWorld::handleRequest(Messaging::Message& aMessage) {
+	switch (aMessage.getMessageType()) {
+	case CopyWorldRequest: {
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
 						+ aMessage.getBody());
@@ -738,8 +735,7 @@ void Model::RobotWorld::fillWorld(std::string& messageBody)
 	notifyObservers();
 }
 
-void Model::RobotWorld::syncWorld(std::string& messageBody)
-{
+void Model::RobotWorld::syncWorld(std::string& messageBody) {
 	Application::Logger::log(
 			__PRETTY_FUNCTION__ + std::string(": SyncWorld") + messageBody);
 	std::vector < std::string > lines;
@@ -749,10 +745,8 @@ void Model::RobotWorld::syncWorld(std::string& messageBody)
 	unsigned long goalID = 0;
 	unsigned long wallID = 0;
 
-	for (std::string line : lines)
-	{
-		if (!line.empty())
-		{
+	for (std::string line : lines) {
+		if (!line.empty()) {
 			std::stringstream ss;
 			std::string aNewName;
 			unsigned long aNewX;
@@ -764,23 +758,13 @@ void Model::RobotWorld::syncWorld(std::string& messageBody)
 
 			RobotPtr robot;
 
-			switch (std::stoi(&line.at(0)))
-			{
+			switch (std::stoi(&line.at(0))) {
 			case Robot:
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewName >> aNewX >> aNewY >> aNewLookX >> aNewLookY;
-				if (aNewName == "Robot")
-				{
-					aNewName = "Bobot";
-				}
-				else if (aNewName == "Bobot")
-				{
-					aNewName = "Robot";
-				}
 				robot = getRobot(aNewName);
-				if (robot)
-				{
+				if (robot) {
 					Application::Logger::log(robot->asString());
 					robot->setPosition(Point(aNewX, aNewY), true);
 					robot->setFront(BoundedVector(aNewLookX, aNewLookY), true);
@@ -796,20 +780,25 @@ void Model::RobotWorld::syncWorld(std::string& messageBody)
 				++waypointID;
 				break;
 			case Goal:
+				/*
+				 line.erase(line.begin());
+				 ss << line;
+				 ss >> aNewName >> aNewX >> aNewY;
+				 getGoals().at(goalID)->setPosition(Point(aNewX, aNewY), false);
+				 getGoals().at(goalID)->notifyObservers();
+				 ++goalID;
+				 break;
+				 */
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewName >> aNewX >> aNewY;
-				getGoals().at(goalID)->setPosition(Point(aNewX, aNewY), false);
-				getGoals().at(goalID)->notifyObservers();
-				++goalID;
+				getGoal(aNewName)->setPosition(Point(aNewX, aNewY), false);
 				break;
 			case Wall:
 				line.erase(line.begin());
 				ss << line;
 				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
-
-				if (getWalls().at(wallID))
-				{
+				if (getWalls().at(wallID)) {
 					getWalls().at(wallID)->setPoint1(Point(aNewX, aNewY),
 							false);
 					getWalls().at(wallID)->setPoint2(
