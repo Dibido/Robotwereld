@@ -165,6 +165,8 @@ public:
 	/**
 	 *
 	 */
+	Region getRegionWithOffset() const;
+
 	bool intersects(const Region& aRegion) const;
 	/**
 	 *
@@ -265,6 +267,8 @@ protected:
 	 *
 	 */
 	void drive(WayPointPtr waypointArrived);
+
+	void restartDriving();
 	/**
 	 *
 	 */
@@ -277,6 +281,7 @@ protected:
 	 *
 	 */
 	bool collision();
+	bool nearRobots();
 private:
 	std::string name;
 
@@ -293,6 +298,8 @@ private:
 
 	bool acting;
 	bool driving;
+	bool started;
+	bool recalculatedNewPath = false;
 	bool communicating;
 	bool calculatedRoute;
 

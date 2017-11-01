@@ -16,15 +16,14 @@
 #include "MainApplication.hpp"
 #include "LaserDistanceSensor.hpp"
 
-namespace Model
-{
+namespace Model {
 /**
  *
  */
 Robot::Robot() :
 		name(""), size( DefaultSize), position( DefaultPosition), front(0, 0), speed(
-				0.0), acting(false), driving(false), communicating(false), calculatedRoute(false)
-{
+				0.0), acting(false), driving(false), communicating(false), calculatedRoute(
+				false) {
 	std::shared_ptr<AbstractSensor> laserSensor(new LaserDistanceSensor(this));
 	attachSensor(laserSensor);
 }
@@ -34,8 +33,7 @@ Robot::Robot() :
 Robot::Robot(const std::string& aName) :
 		name(aName), size( DefaultSize), position( DefaultPosition), front(0,
 				0), speed(0.0), acting(false), driving(false), communicating(
-				false), calculatedRoute(false)
-{
+				false), calculatedRoute(false) {
 	std::shared_ptr<AbstractSensor> laserSensor(new LaserDistanceSensor(this));
 	attachSensor(laserSensor);
 }
@@ -44,66 +42,56 @@ Robot::Robot(const std::string& aName) :
  */
 Robot::Robot(const std::string& aName, const Point& aPosition) :
 		name(aName), size( DefaultSize), position(aPosition), front(0, 0), speed(
-				0.0), acting(false), driving(false), communicating(false), calculatedRoute(false)
-{
+				0.0), acting(false), driving(false), communicating(false), calculatedRoute(
+				false) {
 	std::shared_ptr<AbstractSensor> laserSensor(new LaserDistanceSensor(this));
 	attachSensor(laserSensor);
 }
 /**
  *
  */
-Robot::~Robot()
-{
-	if (driving)
-	{
+Robot::~Robot() {
+	if (driving) {
 		stopDriving();
 	}
-	if (acting)
-	{
+	if (acting) {
 		stopActing();
 	}
-	if (communicating)
-	{
+	if (communicating) {
 		stopCommunicating();
 	}
 }
 /**
  *
  */
-void Robot::setName(const std::string& aName, bool aNotifyObservers /*= true*/)
-{
+void Robot::setName(const std::string& aName,
+		bool aNotifyObservers /*= true*/) {
 	name = aName;
-	if (aNotifyObservers == true)
-	{
+	if (aNotifyObservers == true) {
 		notifyObservers();
 	}
 
 }
 
-void Robot::setGoal(std::string aGoal)
-{
+void Robot::setGoal(std::string aGoal) {
 	goal = RobotWorld::getRobotWorld().getGoal(aGoal);
 }
 
-void Robot::setWayPoint(std::string aWayPoint)
-{
+void Robot::setWayPoint(std::string aWayPoint) {
 	waypoint = RobotWorld::getRobotWorld().getWayPoint(aWayPoint);
 }
 /**
  *
  */
-Size Robot::getSize() const
-{
+Size Robot::getSize() const {
 	return size;
 }
 /**
  *
  */
-void Robot::setSize(const Size& aSize, bool aNotifyObservers /*= true*/)
-{
+void Robot::setSize(const Size& aSize, bool aNotifyObservers /*= true*/) {
 	size = aSize;
-	if (aNotifyObservers == true)
-	{
+	if (aNotifyObservers == true) {
 		notifyObservers();
 	}
 }
@@ -111,56 +99,47 @@ void Robot::setSize(const Size& aSize, bool aNotifyObservers /*= true*/)
  *
  */
 void Robot::setPosition(const Point& aPosition,
-		bool aNotifyObservers /*= true*/)
-{
+		bool aNotifyObservers /*= true*/) {
 	position = aPosition;
-	if (aNotifyObservers == true)
-	{
+	if (aNotifyObservers == true) {
 		notifyObservers();
 	}
 }
 /**
  *
  */
-BoundedVector Robot::getFront() const
-{
+BoundedVector Robot::getFront() const {
 	return front;
 }
 /**
  *
  */
 void Robot::setFront(const BoundedVector& aVector,
-		bool aNotifyObservers /*= true*/)
-{
+		bool aNotifyObservers /*= true*/) {
 	front = aVector;
-	if (aNotifyObservers == true)
-	{
+	if (aNotifyObservers == true) {
 		notifyObservers();
 	}
 }
 /**
  *
  */
-float Robot::getSpeed() const
-{
+float Robot::getSpeed() const {
 	return speed;
 }
 /**
  *
  */
-void Robot::setSpeed(float aNewSpeed, bool aNotifyObservers /*= true*/)
-{
+void Robot::setSpeed(float aNewSpeed, bool aNotifyObservers /*= true*/) {
 	speed = aNewSpeed;
-	if (aNotifyObservers == true)
-	{
+	if (aNotifyObservers == true) {
 		notifyObservers();
 	}
 }
 /**
  *
  */
-void Robot::startActing()
-{
+void Robot::startActing() {
 	acting = true;
 	std::thread newRobotThread([this]
 	{	startDriving();});
@@ -169,8 +148,7 @@ void Robot::startActing()
 /**
  *
  */
-void Robot::stopActing()
-{
+void Robot::stopActing() {
 	acting = false;
 	driving = false;
 	robotThread.join();
@@ -178,41 +156,43 @@ void Robot::stopActing()
 /**
  *
  */
-void Robot::startDriving()
-{
-	if (calculatedRoute == false)
-	{
-//		calculateRoute(waypoint);
-		calculateRoute(goal);
-		calculatedRoute = true;
-		return;
-	}
-	else
-	{
-		driving = true;
-//		drive(waypoint);
-		drive(goal);
+void Robot::startDriving() {
+	if (!arrived(goal)) {
+		if (calculatedRoute == false) {
+			//		calculateRoute(waypoint);
+			calculateRoute(goal);
+			calculatedRoute = true;
+			return;
+		} else {
+			driving = true;
+			//		drive(waypoint);
+			//calculatedRoute = false;
+			if (Model::RobotWorld::getRobotWorld().isChanged()) {
+
+				Model::RobotWorld::getRobotWorld().unsetChanged();
+				calculateRoute(goal);
+			}
+
+			//calculateRoute(goal);
+			drive(goal);
+		}
 	}
 }
 /**
  *
  */
-void Robot::stopDriving()
-{
+void Robot::stopDriving() {
 	driving = false;
 }
 /**
  *
  */
-void Robot::startCommunicating()
-{
-	if (!communicating)
-	{
+void Robot::startCommunicating() {
+	if (!communicating) {
 		communicating = true;
 
 		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port"))
-		{
+		if (Application::MainApplication::isArgGiven("-local_port")) {
 			localPort =
 					Application::MainApplication::getArg("-local_port").value;
 		}
@@ -224,15 +204,12 @@ void Robot::startCommunicating()
 /**
  *
  */
-void Robot::stopCommunicating()
-{
-	if (communicating)
-	{
+void Robot::stopCommunicating() {
+	if (communicating) {
 		communicating = false;
 
 		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port"))
-		{
+		if (Application::MainApplication::isArgGiven("-local_port")) {
 			localPort =
 					Application::MainApplication::getArg("-local_port").value;
 		}
@@ -245,17 +222,21 @@ void Robot::stopCommunicating()
 /**
  *
  */
-Region Robot::getRegion() const
-{
-	Point translatedPoints[] =
-	{ getFrontRight(), getFrontLeft(), getBackLeft(), getBackRight() };
+
+Region Robot::getRegion() const {
+	Point translatedPoints[] = { getFrontRight(), getFrontLeft(), getBackLeft(),
+			getBackRight() };
 	return Region(4, translatedPoints);
+}
+
+Region Robot::getRegionWithOffset() const {
+
+	return Region(position.x, position.y, size.x + 50, size.y + 50);
 }
 /**
  *
  */
-bool Robot::intersects(const Region& aRegion) const
-{
+bool Robot::intersects(const Region& aRegion) const {
 	Region region = getRegion();
 	region.Intersect(aRegion);
 	return !region.IsEmpty();
@@ -263,9 +244,8 @@ bool Robot::intersects(const Region& aRegion) const
 /**
  *
  */
-Point Robot::getFrontLeft() const
-{
-	// x and y are pointing to top left now
+Point Robot::getFrontLeft() const {
+// x and y are pointing to top left now
 	int x = position.x - (size.x / 2);
 	int y = position.y - (size.y / 2);
 
@@ -285,9 +265,8 @@ Point Robot::getFrontLeft() const
 /**
  *
  */
-Point Robot::getFrontRight() const
-{
-	// x and y are pointing to top left now
+Point Robot::getFrontRight() const {
+// x and y are pointing to top left now
 	int x = position.x - (size.x / 2);
 	int y = position.y - (size.y / 2);
 
@@ -307,9 +286,8 @@ Point Robot::getFrontRight() const
 /**
  *
  */
-Point Robot::getBackLeft() const
-{
-	// x and y are pointing to top left now
+Point Robot::getBackLeft() const {
+// x and y are pointing to top left now
 	int x = position.x - (size.x / 2);
 	int y = position.y - (size.y / 2);
 
@@ -331,9 +309,8 @@ Point Robot::getBackLeft() const
 /**
  *
  */
-Point Robot::getBackRight() const
-{
-	// x and y are pointing to top left now
+Point Robot::getBackRight() const {
+// x and y are pointing to top left now
 	int x = position.x - (size.x / 2);
 	int y = position.y - (size.y / 2);
 
@@ -354,62 +331,30 @@ Point Robot::getBackRight() const
 /**
  *
  */
-void Robot::handleNotification()
-{
-	//	std::unique_lock<std::recursive_mutex> lock(robotMutex);
+void Robot::handleNotification() {
+//	std::unique_lock<std::recursive_mutex> lock(robotMutex);
 
 	static int update = 0;
-	if ((++update % 200) == 0)
-	{
+	if ((++update % 200) == 0) {
 		notifyObservers();
 	}
 }
 /**
  *
  */
-void Robot::handleRequest(Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case EchoRequest:
-	{
+void Robot::handleRequest(Messaging::Message& aMessage) {
+	switch (aMessage.getMessageType()) {
+	case EchoRequest: {
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
 		aMessage.setMessageType(EchoResponse);
 		aMessage.setBody(": case 1 " + aMessage.asString());
 		break;
 	}
-	default:
-	{
+	case Model::RobotWorld::CopyRobots: {
 		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": default"));
-
-		aMessage.setBody(" default  Goodbye cruel world!");
-		break;
-	}
-	}
-}
-/**
- *
- */
-void Robot::handleResponse(const Messaging::Message& aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case EchoResponse:
-	{
-		Application::Logger::log(
-				__PRETTY_FUNCTION__
-						+ std::string(": case EchoResponse: not implemented, ")
-						+ aMessage.asString());
-
-		break;
-	}
-	case Model::RobotWorld::CopyRobots:
-	{
-		Application::Logger::log(
-						__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
-								+ aMessage.getBody());
+				__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
+						+ aMessage.getBody());
 		std::stringstream ss;
 		ss << aMessage.getBody();
 
@@ -422,24 +367,42 @@ void Robot::handleResponse(const Messaging::Message& aMessage)
 		ss >> aName >> x >> y >> lx >> ly;
 
 		Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
-				("Robot"));
+				(std::string(Application::MainApplication::getArg("-worldname").value)));
 
-		if (robot)
-		{
+		if (robot) {
 			Application::Logger::log(robot->asString());
 			robot->setPosition(Point(x, y), true);
 			robot->setFront(BoundedVector(lx, ly), true);
 
-		}
-		else
-		{
+		} else {
 			Application::Logger::log("No robot has the name : " + aName);
 		}
 
 		break;
 	}
-	default:
-	{
+	default: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": default"));
+
+		aMessage.setBody(" default  Goodbye cruel world!");
+		break;
+	}
+	}
+}
+/**
+ *
+ */
+void Robot::handleResponse(const Messaging::Message& aMessage) {
+	switch (aMessage.getMessageType()) {
+	case EchoResponse: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__
+						+ std::string(": case EchoResponse: not implemented, ")
+						+ aMessage.asString());
+
+		break;
+	}
+	default: {
 		Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": default not implemented, ")
 						+ aMessage.asString());
@@ -450,8 +413,7 @@ void Robot::handleResponse(const Messaging::Message& aMessage)
 /**
  *
  */
-std::string Robot::asString() const
-{
+std::string Robot::asString() const {
 	std::ostringstream os;
 
 	os << "Robot " << name << " at (" << position.x << "," << position.y << ")";
@@ -461,8 +423,7 @@ std::string Robot::asString() const
 /**
  *
  */
-std::string Robot::asDebugString() const
-{
+std::string Robot::asDebugString() const {
 	std::ostringstream os;
 
 	os << "Robot:\n";
@@ -475,8 +436,7 @@ std::string Robot::asDebugString() const
 /**
  * Function to copy robot into a string
  */
-std::string Robot::asCopyString() const
-{
+std::string Robot::asCopyString() const {
 	std::ostringstream os;
 
 	os << name << " " << position.x << " " << position.y << " " << front.x
@@ -487,69 +447,80 @@ std::string Robot::asCopyString() const
 /**
  *
  */
-void Robot::drive(WayPointPtr waypointArrived)
-{
-	try
-	{
-		for (std::shared_ptr<AbstractSensor> sensor : sensors)
-		{
+void Robot::drive(WayPointPtr waypointArrived) {
+	try {
+		for (std::shared_ptr<AbstractSensor> sensor : sensors) {
 			//sensor->setOn();
 		}
 
-		if (speed == 0.0)
-		{
+		if (speed == 0.0) {
 			speed = 10.0;
 		}
 
 		unsigned pathPoint = 0;
 		while (position.x > 0 && position.x < 500 && position.y > 0
-				&& position.y < 500 && pathPoint < path.size())
-		{
+				&& position.y < 500 && pathPoint < path.size()) {
+
+			if (nearRobots() && !recalculatedNewPath) {
+				Application::Logger::log(
+						__PRETTY_FUNCTION__
+								+ std::string(
+										": distance between two robots is smaller than 75 "));
+
+				notifyObservers();
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				restartDriving();
+				break;
+			}
+
 			const PathAlgorithm::Vertex& vertex = path[pathPoint += speed];
 			front = BoundedVector(vertex.asPoint(), position);
 			position.x = vertex.x;
 			position.y = vertex.y;
 
-			if (arrived(waypointArrived) || collision())
-			{
+			if (arrived(waypointArrived) || collision()) {
 				Application::Logger::log(
 						__PRETTY_FUNCTION__
-								+ std::string(": arrived or collision"));
+								+ std::string(
+										": arrived at goal or collision with wall"));
 				//TODO
-				calculateRoute(goal);
+				//calculateRoute(goal);
 				notifyObservers();
 				break;
 			}
+
 			notifyObservers();
 			sendRobotPosition();
+
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 			// this should be the last thing in the loop
-			if (driving == false)
-			{
+			if (driving == false) {
 				return;
 			}
 		} // while
 
-		for (std::shared_ptr<AbstractSensor> sensor : sensors)
-		{
+		for (std::shared_ptr<AbstractSensor> sensor : sensors) {
 			//sensor->setOff();
 		}
-	} catch (std::exception& e)
-	{
+	} catch (std::exception& e) {
 		std::cerr << __PRETTY_FUNCTION__ << ": " << e.what() << std::endl;
-	} catch (...)
-	{
+	} catch (...) {
 		std::cerr << __PRETTY_FUNCTION__ << ": unknown exception" << std::endl;
 	}
 }
 /**
  *
  */
-void Robot::calculateRoute(WayPointPtr aGoal)
-{
+void Robot::restartDriving() {
+	stopDriving();
+	calculateRoute(goal);
+	recalculatedNewPath = true;
+	startDriving();
+}
+
+void Robot::calculateRoute(WayPointPtr aGoal) {
 	path.clear();
-	if (aGoal)
-	{
+	if (aGoal) {
 		// Turn off logging if not debugging AStar
 		Application::Logger::setDisable();
 
@@ -564,10 +535,8 @@ void Robot::calculateRoute(WayPointPtr aGoal)
 /**
  *
  */
-bool Robot::arrived(WayPointPtr aGoal)
-{
-	if (aGoal && intersects(aGoal->getRegion()))
-	{
+bool Robot::arrived(WayPointPtr aGoal) {
+	if (aGoal && intersects(aGoal->getRegion())) {
 		return true;
 	}
 	return false;
@@ -575,56 +544,73 @@ bool Robot::arrived(WayPointPtr aGoal)
 /**
  *
  */
-bool Robot::collision()
-{
+bool Robot::collision() {
 	Point frontLeft = getFrontLeft();
 	Point frontRight = getFrontRight();
 	Point backLeft = getBackLeft();
 	Point backRight = getBackRight();
 
 	const std::vector<WallPtr>& walls = RobotWorld::getRobotWorld().getWalls();
-	for (WallPtr wall : walls)
-	{
+	for (WallPtr wall : walls) {
 		if (Utils::Shape2DUtils::intersect(frontLeft, frontRight,
 				wall->getPoint1(), wall->getPoint2())
 				|| Utils::Shape2DUtils::intersect(frontLeft, backLeft,
 						wall->getPoint1(), wall->getPoint2())
 				|| Utils::Shape2DUtils::intersect(frontRight, backRight,
-						wall->getPoint1(), wall->getPoint2()))
-		{
+						wall->getPoint1(), wall->getPoint2())) {
 			return true;
 		}
 	}
 	return false;
 }
 
-void Robot::sendRobotPosition()
-{
-	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(
-			"Robot");
-	if (robot)
-	{
+bool Robot::nearRobots() {
+	const std::vector<RobotPtr>& robots =
+			RobotWorld::getRobotWorld().getRobots();
+
+	for (std::size_t j = 1; j < robots.size(); ++j) {
+		if (name != robots[j]->getName()) {
+			int distanceX = abs(position.x - robots[j]->getPosition().x);
+			int distanceY = abs(position.y - robots[j]->getPosition().y);
+
+			if (distanceX < 75 && distanceY < 75) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void Robot::sendRobotPosition() {
+	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot(std::string(Application::MainApplication::getArg("-worldname").value));
+	if (robot) {
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
 
-		if (Application::MainApplication::isArgGiven("-remote_ip"))
-		{
+		if (Application::MainApplication::isArgGiven("-remote_ip")) {
 			remoteIpAdres =
 					Application::MainApplication::getArg("-remote_ip").value;
 		}
-		if (Application::MainApplication::isArgGiven("-remote_port"))
-		{
+		if (Application::MainApplication::isArgGiven("-remote_port")) {
 			remotePort =
 					Application::MainApplication::getArg("-remote_port").value;
 		}
 
 		Messaging::Client client(remoteIpAdres, remotePort, robot);
-		Messaging::Message message(
-				Model::RobotWorld::MessageType::CopyRobots,
+		Messaging::Message message(Model::RobotWorld::MessageType::CopyRobots,
 				asCopyString());
 		Application::Logger::log(message.getBody());
 		client.dispatchMessage(message);
+
+		//driving = false;
+
+		/*
+		 Messaging::Message message2(
+		 Model::RobotWorld::MessageType::StartRequest, "StartRequest");
+		 client.dispatchMessage(message);
+		 */
 	}
+
 }
 
 } // namespace Model

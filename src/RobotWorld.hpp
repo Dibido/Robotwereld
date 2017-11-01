@@ -222,6 +222,10 @@ public:
 	 * Function that syncs the world based on a string.
 	 */
 	void syncWorld(std::string& messageBody);
+
+	bool isChanged();
+	void setChanged();
+	void unsetChanged();
 	/**
 	 *
 	 */
@@ -243,6 +247,7 @@ private:
 	mutable std::vector<WallPtr> walls;
 
 	bool communicating;
+	bool changed = false;
 	RobotWorldPtr robotWorldPtr;
 };
 } // namespace Model
